@@ -49,11 +49,13 @@ export default function GamePage() {
     <>
       <h1>Battleships</h1>
       <div className="gameUI">
+        {/* First gameboard */}
         <Container className="gameboard">
+          {/* Reference row*/}
           <Row className="rad">
-            {index.map((something, index) => (
+            {index.map((letter, index) => (
               <Col className="square" key={index}>
-                {something}
+                {letter}
               </Col>
             ))}
           </Row>
@@ -77,11 +79,14 @@ export default function GamePage() {
             </Row>
           ))}
         </Container>
+
+        {/* Second gameboard */}
         <Container className="gameboard">
+          {/* Reference row*/}
           <Row className="rad">
-            {index.map((something, index) => (
+            {index.map((letter, index) => (
               <Col className="square" key={index}>
-                {something}
+                {letter}
               </Col>
             ))}
           </Row>
