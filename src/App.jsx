@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div id="App">
-      <Container className="py-3">
+      <Container>
         <Routes>
           <Route path="/gameboard" element={<GamePage />} />
         </Routes>
