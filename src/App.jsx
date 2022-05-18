@@ -1,8 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import GamePage from "./pages/GamePage";
 import StartPage from "./pages/StartPage";
 import Container from "react-bootstrap/Container";
 import { Routes, Route } from "react-router-dom";
+import './assets/scss/App.scss'
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button'
+import {Button, Form} from 'react-bootstrap/'
 import { Link } from 'react-router-dom'
 
 const StartPage = () => {
@@ -7,22 +7,37 @@ const StartPage = () => {
     return (
 
         <>
+        
+        <div className="ontainer">
 
-        <div class="container">
+            <div className='form-box'>
 
             <h1>BattleShips</h1>
 
-            <form>
+            <Form className='text-center'>
 
-                <input type="text" placeholder="Name, please." />
+                <Form.Group className="group-form">
 
-            </form>
+                    <Form.Control className='form-input' id="form-input-name" type="text" placeholder="Name, please." />
 
-            <Button variant="info" as={Link} to="/GamePage" onclick="">Start Game</Button>
+                    <Form.Text>
 
-        </div>
+                        Please, enter your name here.
 
-        <div>
+                    </Form.Text>
+
+                
+                </Form.Group>
+
+                <Button className="join-button" id="join-button-id" variant="info" as={Link} to="/GamePage" onclick="">Start Game</Button>
+
+            </Form>
+
+            
+
+            </div>
+
+        <div className="rules">
 
             <h2>How to play BattleShips!</h2>
 
@@ -30,6 +45,7 @@ const StartPage = () => {
 
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At ex culpa soluta labore aut aperiam eos ipsum repellendus delectus neque. Aspernatur consequatur exercitationem iste unde a debitis blanditiis maiores suscipit?</p>
 
+        </div>
         </div>
 
         </>
