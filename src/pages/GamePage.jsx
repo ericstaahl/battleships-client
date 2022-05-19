@@ -2,8 +2,11 @@ import React from "react";
 import { useState } from "react";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
+import useRandomPosition from "../hooks/useRandomPosition";
 
 export default function GamePage() {
+  const boat_position = useRandomPosition();
+  console.log("from gamepage", boat_position[0]);
   const [row, setRows] = useState([
     "1",
     "2",

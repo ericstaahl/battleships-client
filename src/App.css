@@ -61,6 +61,10 @@ button {
   background-color: rgb(255, 255, 255);
 }
 
+.active {
+  background-color: chartreuse;
+}
+
 button:hover {
   opacity: 1;
 }
