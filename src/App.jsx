@@ -1,3 +1,4 @@
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import GamePage from "./pages/GamePage";
 import Container from "react-bootstrap/Container";
@@ -8,13 +9,13 @@ function App() {
   return (
     <div id="App">
       <SocketContext>
-        <Container className="py-3">
+        <Container>
           <Routes>
             <Route path="/gameboard" element={<GamePage />} />
           </Routes>
         </Container>
       </SocketContext>
-    </div>
+    </div >
   );
 }
 
