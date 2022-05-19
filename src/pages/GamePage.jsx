@@ -13,6 +13,9 @@ export default function GamePage() {
     const joinGame = () => {
       socket.emit('joinGame')
     }
+    socket.on('HiRoom', () => {
+      console.log('Server said hi to your room')
+    })
   const [row, setRows] = useState([
     "1",
     "2",
