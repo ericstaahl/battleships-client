@@ -12,6 +12,8 @@ const useRandomPosition = () => {
     { size: 2, coordinate: [] },
   ]);
 
+  //const [existence, setExistence] = useState("");
+
   const boatCoordinates = [
     "C1",
     "C2",
@@ -25,7 +27,6 @@ const useRandomPosition = () => {
     "C10",
     "B1",
     "B2",
-    "B3",
     "B4",
     "B5",
     "B6",
@@ -35,6 +36,7 @@ const useRandomPosition = () => {
     "B10",
   ];
 
+  //Function to get a random number
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -55,29 +57,27 @@ const useRandomPosition = () => {
 
     //Making sure it cannot be placed outside the board
     let interval = getRandomInt(10 - size);
-    let first = coordinates[align][interval];
+    let start = coordinates[align][interval];
     let array = [];
 
     //Getting as many coordinates as ship length
     for (let index = 0; index < size; index++) {
-      const secondCo = coordinates[opposite][interval++];
-      let firstCo = first;
+      const lengthCo = coordinates[opposite][interval++];
+      let startCo = start;
       let co;
 
       //Making sure the letter always comes first
-      if (typeof firstCo === "string") {
-        co = firstCo + secondCo;
+      if (typeof startCo === "string") {
+        co = startCo + lengthCo;
       } else {
-        co = secondCo + firstCo;
+        co = lengthCo + startCo;
       }
 
-      if (boatCoordinates.includes(co)) {
-        return;
-      }
+      //make sure coordinates are a string and not mixed
+      co = co.toString();
 
       //Save the coordinates for one boat to an array
-      array.push(co.toString());
-      //console.log(array);
+      array.push(co);
 
       //Save the coordinates for one boat to an array
       //boats[size].coordinate.push(co);
@@ -85,24 +85,66 @@ const useRandomPosition = () => {
     return array;
   }
 
+  //   useEffect(() => {
+  //     setBoats(
+  //       (boats[0].coordinate = [...getCoordinates(4)]),
+  //       (boats[1].coordinate = [...getCoordinates(3)]),
+  //       (boats[2].coordinate = [...getCoordinates(2)]),
+  //       (boats[3].coordinate = [...getCoordinates(2)])
+  //     );
+  //   }, []);
+
   useEffect(() => {
-    //console.log("This is the coordinates " + getCoordinates(4));
+    function checkBoat(boat) {
+      //Check if the coordinates are already taken
+      for (let index = 0; index < boat.length; index++) {
+        const element = boat[index];
 
-    let generatedCo = getCoordinates(4);
-    console.log("genererat ", generatedCo);
-
-    //Check if the coordinates are already taken
-    for (let index = 0; index < generatedCo.length; index++) {
-      const element = generatedCo[index];
-
-      //If it is abort mission
-      if (boatCoordinates.includes(element)) {
-        return;
+        //If it is change boat
+        if (boatCoordinates.includes(element)) {
+          console.log("already exists", boat.length, boat);
+          boat = getCoordinates(boat.length);
+          console.log("New boat ", boat);
+        }
       }
-
-      boats[0].coordinate.push(generatedCo[index]);
-      console.log("Yaaay This is the coordinates", boats[0].coordinate);
+      return boat;
     }
+
+    let boat4 = checkBoat(getCoordinates(4));
+    //console.log("boat4 ", boat4);
+    for (let index = 0; index < boat4.length; index++) {
+      const element = boat4[index];
+      boatCoordinates.push(element);
+    }
+    let boat3 = checkBoat(getCoordinates(3));
+    //console.log("boat3 ", boat3);
+    for (let index = 0; index < boat3.length; index++) {
+      const element = boat3[index];
+      boatCoordinates.push(element);
+    }
+    let boat2_1 = checkBoat(getCoordinates(2));
+    //console.log("boat2.1 ", boat2_1);
+    for (let index = 0; index < boat2_1.length; index++) {
+      const element = boat2_1[index];
+      boatCoordinates.push(element);
+    }
+    let boat2_2 = checkBoat(getCoordinates(2));
+    //console.log("boat2.2 ", boat2_2);
+    for (let index = 0; index < boat2_2.length; index++) {
+      const element = boat2_2[index];
+      boatCoordinates.push(element);
+    }
+
+    //Save the coordinates to the boats
+    setBoats(
+      (boats[0].coordinate = [...boat4]),
+      (boats[1].coordinate = [...boat3]),
+      (boats[2].coordinate = [...boat2_1]),
+      (boats[3].coordinate = [...boat2_2])
+    );
+
+    console.log(boatCoordinates);
+    console.log("The fleet", boats);
   }, []);
 
   return [boats];

@@ -1,14 +1,14 @@
 import React from "react";
 import { useSocketContext } from "../contexts/SocketContext";
-import { useState } from "react";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import useRandomPosition from "../hooks/useRandomPosition";
+import useGeneratefleet from "../hooks/useGeneratefleet";
 
 export default function GamePage() {
-  const boat_position = useRandomPosition();
-  console.log("from gamepage", boat_position[0]);
+  const fleet = useGeneratefleet();
+  console.log("from gamepage, fleet", fleet);
   const socket = useSocketContext();
   socket.on("connected", (text) => {
     console.log(text);
@@ -16,44 +16,10 @@ export default function GamePage() {
   const joinGame = () => {
     socket.emit("joinGame");
   };
-  const [row, setRows] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-  ]);
-  const [column, setColumns] = useState([
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-  ]);
+  const row = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  const column = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
-  const [ref, setRef] = useState([
-    "",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-  ]);
+  const ref = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
   return (
     <>
