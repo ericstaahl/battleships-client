@@ -16,6 +16,9 @@ export default function GamePage() {
     socket.on('HiRoom', () => {
       console.log('Server said hi to your room')
     })
+    socket.on('userLeft', (message) => {
+      console.log(message)
+    })
   const [row, setRows] = useState([
     "1",
     "2",
