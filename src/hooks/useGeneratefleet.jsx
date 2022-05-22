@@ -60,22 +60,6 @@ const useGeneratefleet = () => {
   buildShip(4);
   buildShip(3);
 
-  //columns (length) HORIZONTAL
-  let x = 4;
-  //row VERTICAL
-  let y = 2;
-
-  //   console.log(fleet[y][x]);
-  //   console.log("x= ", x);
-  //   let length = x - 1;
-  //   for (let index = 0; index < x; index++) {
-  //     length++;
-  //     fleet[y][length] = "ship1";
-  //     console.log("length", length);
-  //   }
-  //   console.log("what is on this position: ", fleet[y][x]);
-  //const ship1 = { size: 3, sunk: false };
-
   return [fleet];
 };
 
