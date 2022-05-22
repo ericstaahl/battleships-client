@@ -5,6 +5,7 @@ import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import useRandomPosition from "../hooks/useRandomPosition";
 import useGeneratefleet from "../hooks/useGeneratefleet";
+import { useState } from "react";
 
 export default function GamePage() {
   const fleet = useGeneratefleet();
