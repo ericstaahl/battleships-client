@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useGeneratefleet = () => {
   const [fleet, setFleet] = useState([
@@ -15,10 +15,10 @@ const useGeneratefleet = () => {
   ]);
 
   const [ships, setShips] = useState([
-    { size: 4, coordinates: [], sunk: false },
-    { size: 3, coordinates: [], sunk: false },
-    { size: 2, coordinates: [], sunk: false },
-    { size: 2, coordinates: [], sunk: false },
+    { size: 4, sunk: false },
+    { size: 3, sunk: false },
+    { size: 2, sunk: false },
+    { size: 2, sunk: false },
   ]);
 
   //Function to get a random number
@@ -28,63 +28,65 @@ const useGeneratefleet = () => {
   }
 
   function buildShip(size) {
-    let test = getRandomInt(0, 1);
-    console.log("test", test);
+    //Randomize a position
+    let position = getRandomInt(0, 1);
+    console.log("What is the position", position);
     let generate = true;
     let busy = false;
+
+    //As long as generate is true it will continue to create a new ship
     while (generate === true) {
-      if (test === 0) {
+      //Horizontal placement
+      if (position === 0) {
         busy = false;
         let length = getRandomInt(0, 9);
+        //Make sure the ship won't be placed outside the board
         let row = getRandomInt(0, 10 - size);
-        console.log("length:", length, "row: ", row);
         //Making sure it begins on the chosen position
         row = row - 1;
-        console.log("row first time", row);
+
+        //Check every position/coordinate if it's busy
         for (let index = 0; index < size; index++) {
           row++;
           if (fleet[row][length] !== null) {
             console.log("OH NO... Busy");
             busy = true;
           }
-          //fleet[row][length] = "ship" + size;
-          //console.log("start", row);
         }
-        console.log("BUSY", busy);
+
+        //If all the spaces are empty, add our ship object to the board
         if (busy === false) {
-          console.log("PASSED CHECK", row);
+          console.log("PASSED CHECK", size);
           row = row - size;
           for (let index = 0; index < size; index++) {
             row++;
-            fleet[row][length] = "ship" + size;
-            //console.log("start", row);
+            const found = ships.find((ship) => ship.size === size);
+            fleet[row][length] = found;
           }
           generate = false;
         }
       } else {
+        //Vertical placement
         busy = false;
         let length = getRandomInt(0, 10 - size);
         let row = getRandomInt(0, 9);
         console.log("length:", length, "row: ", row);
-        //Making sure it begins on the chosen position
         length = length - 1;
         for (let index = 0; index < size; index++) {
           length++;
-          //Could put the ship object here
           if (fleet[row][length] !== null) {
             console.log("OH NO... Busy");
             busy = true;
           }
-          //fleet[row][length] = "ship" + size;
-          //console.log("length", length);
         }
         console.log("BUSY", busy);
         if (busy === false) {
-          console.log("PASSED CHECK");
+          console.log("PASSED CHECK", size);
           length = length - size;
           for (let index = 0; index < size; index++) {
             length++;
-            fleet[row][length] = "ship" + size;
+            const found = ships.find((ship) => ship.size === size);
+            fleet[row][length] = found;
             console.log("FROM IF STATEMENT");
           }
           generate = false;
@@ -95,9 +97,10 @@ const useGeneratefleet = () => {
     }
   }
 
-  //horizontal(4);
   buildShip(4);
   buildShip(3);
+  buildShip(2);
+  buildShip(2);
 
   return [fleet];
 };

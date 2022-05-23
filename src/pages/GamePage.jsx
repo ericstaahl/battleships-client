@@ -56,7 +56,7 @@ export default function GamePage() {
     "J",
   ]);
 
-  const ref = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J"];
 
   return (
     <>
