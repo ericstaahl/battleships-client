@@ -12,22 +12,22 @@ const Gameboard = (props) => {
       <Row className="rad">
         {props.refs.map((letter, index) => (
           <Col className="square" key={index}>
-            {letter}
+            {index}
           </Col>
         ))}
       </Row>
-      {fleet[0].map((array, index) => (
-        <Row className="rad" key={index}>
-          <Col className="square" key={index}>
-            {props.rows[index]}
+      {fleet[0].map((array, fleetIndex) => (
+        <Row className="rad" key={fleetIndex}>
+          <Col className="square" key={fleetIndex}>
+            {props.columns[fleetIndex]}
           </Col>
-          {fleet[0][index].map((shipObject, index) => (
-            <Col className="square" key={index}>
+          {fleet[0][fleetIndex].map((shipObject, index) => (
+            <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
               <button
                 value={shipObject}
-                onClick={(e) => console.log(shipObject)}
+                onClick={(e) => console.log(shipObject, e.target.parentElement.getAttribute('data-coords'))}
               >
-                {index}
+                {(index + 1) + props.columns[fleetIndex]}
               </button>
             </Col>
           ))}
