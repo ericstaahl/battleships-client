@@ -3,7 +3,6 @@ import { useSocketContext } from "../contexts/SocketContext";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
-import useRandomPosition from "../hooks/useRandomPosition";
 import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 

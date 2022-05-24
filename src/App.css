@@ -69,6 +69,10 @@ button:hover {
   opacity: 1;
 }
 
+.rad {
+  display: inline;
+}
+
 .gameUI {
   display: flex;
   justify-content: center;
@@ -79,8 +83,8 @@ h1 {
 }
 
 .square {
-  width: 2.7em;
-  height: 2.7em;
+  width: 4em;
+  height: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
