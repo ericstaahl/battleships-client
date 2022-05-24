@@ -16,7 +16,7 @@ const StartPage = () => {
 
                 <Form className='text-center'>
 
-                    <Form.Group className="group-form">
+                    <Form.Group className="group-form col-xs-2">
 
                         <Form.Control className='form-input' id="form-input-name" type="text" placeholder="Name, please." />
 
