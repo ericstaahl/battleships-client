@@ -7,8 +7,8 @@ import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 
 export default function GamePage() {
-  const fleet = useGeneratefleet();
-  console.log("from gamepage, fleet", fleet);
+  // const fleet = useGeneratefleet();
+  // console.log("from gamepage, fleet", fleet);
   const socket = useSocketContext();
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
