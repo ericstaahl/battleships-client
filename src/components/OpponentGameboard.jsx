@@ -1,3 +1,4 @@
+import { useSocketContext } from "../contexts/SocketContext";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -5,6 +6,7 @@ import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 
 const Gameboard = (props) => {
+  const socket = useSocketContext();
   const [fleet, setFleet] = useState([[
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -18,6 +20,9 @@ const Gameboard = (props) => {
     [null, null, null, null, null, null, null, null, null, null],
   ]]);
 
+  socket.on("coordinatesFromServer", (coordinates) => {
+    console.log("Coords from server:", coordinates);
+  });
   return (
     <Container className="gameboard">
       {/* Reference row*/}
@@ -38,7 +43,10 @@ const Gameboard = (props) => {
               <button
                 className={`${shipObject !== null ? "active" : ""}`}
                 value={shipObject}
-                onClick={(e) => console.log(shipObject, e.target.parentElement.getAttribute('data-coords'))}
+                onClick={(e) => {
+                  console.log(shipObject, e.target.parentElement.getAttribute('data-coords'))
+                  socket.emit("coordinates", e.target.parentElement.getAttribute('data-coords'));
+                }}
               >
                 {(index + 1) + props.columns[fleetIndex]}
               </button>
