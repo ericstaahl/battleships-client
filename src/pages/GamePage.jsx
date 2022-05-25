@@ -65,13 +65,15 @@ export default function GamePage() {
       </Button>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
-      <div className="gameUI">
-        {/* First gameboard */}
-        <Gameboard rows={row} columns={column} refs={ref} />
+      {gameFound && (
+        <div className="gameUI">
+          {/* First gameboard */}
+          <Gameboard rows={row} columns={column} refs={ref} />
 
-        {/* Second gameboard */}
-        <Gameboard rows={row} columns={column} refs={ref} />
-      </div>
+          {/* Second gameboard */}
+          <Gameboard rows={row} columns={column} refs={ref} />
+        </div>
+      )}
     </>
   );
 }

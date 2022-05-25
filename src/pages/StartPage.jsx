@@ -26,7 +26,7 @@ const StartPage = () => {
               variant="info"
               as={Link}
               to="/gameboard"
-              onclick=""
+              onClick=""
             >
               Start Game
             </Button>
