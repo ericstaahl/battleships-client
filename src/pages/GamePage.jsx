@@ -5,6 +5,7 @@ import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
+import OpponentGameBoard from "../components/OpponentGameboard"
 
 export default function GamePage() {
   // const fleet = useGeneratefleet();
@@ -71,7 +72,7 @@ export default function GamePage() {
           <Gameboard rows={row} columns={column} refs={ref} />
 
           {/* Second gameboard */}
-          <Gameboard rows={row} columns={column} refs={ref} />
+          <OpponentGameBoard rows={row} columns={column} refs={ref} />
         </div>
       )}
     </>
