@@ -2,17 +2,21 @@ import { useState, useEffect } from "react";
 
 const useGeneratefleet = () => {
   const fleet = [
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
   ];
+  // for (let index = 0; index < 100; index++) {
+  //   const box = {hit: false, ship: {hit: false, ship: null}}
+  //   fleet.push(box)
+  // }
 
   const [ships, setShips] = useState([
     { size: 4, sunk: false },
@@ -48,7 +52,7 @@ const useGeneratefleet = () => {
         //Check every position/coordinate if it's busy
         for (let index = 0; index < size; index++) {
           row++;
-          if (fleet[row][length] !== null) {
+          if (fleet[row][length].ship !== null) {
             console.log("OH NO... Busy");
             busy = true;
           }
@@ -61,6 +65,7 @@ const useGeneratefleet = () => {
           for (let index = 0; index < size; index++) {
             row++;
             const found = ships.find((ship) => ship.size === size);
+            console.log("Found:", found)
             fleet[row][length] = found;
           }
           generate = false;
@@ -74,7 +79,7 @@ const useGeneratefleet = () => {
         length = length - 1;
         for (let index = 0; index < size; index++) {
           length++;
-          if (fleet[row][length] !== null) {
+          if (fleet[row][length].ship !== null) {
             console.log("OH NO... Busy");
             busy = true;
           }
