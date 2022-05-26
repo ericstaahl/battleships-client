@@ -21,6 +21,7 @@ const Gameboard = (props) => {
   ]]);
 
   socket.on("coordinatesFromServer", (coordinates) => {
+    console.log(typeof coordinates)
     console.log("Coords from server:", coordinates);
   });
   return (
