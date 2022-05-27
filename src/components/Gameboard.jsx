@@ -7,12 +7,6 @@ import { useState } from "react";
 const Gameboard = (props) => {
   //import the fleet and map it out
   const [fleet, setFleet] = useState(useGeneratefleet());
-  const changeFleet = () => {
-    const newFleet = [...fleet]
-    console.log(JSON.stringify(newFleet[0][0][0]))
-    newFleet[0][0][0] = true
-    setFleet(newFleet)
-  }
   return (
     <Container className="gameboard">
       {/* Reference row*/}
@@ -42,7 +36,6 @@ const Gameboard = (props) => {
           ))}
         </Row>
       ))}
-      <button onClick={changeFleet}>Change board</button>
     </Container>
   );
 };
