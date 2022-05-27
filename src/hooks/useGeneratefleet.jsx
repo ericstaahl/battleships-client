@@ -2,16 +2,126 @@ import { useState, useEffect } from "react";
 
 const useGeneratefleet = () => {
   const fleet = [
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
-    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
+    [
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+      { hit: false, ship: null },
+    ],
   ];
   // for (let index = 0; index < 100; index++) {
   //   const box = {hit: false, ship: {hit: false, ship: null}}
@@ -31,7 +141,7 @@ const useGeneratefleet = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  function buildShip(size) {
+  function buildShip(shipObject) {
     //Randomize a position
     let position = getRandomInt(0, 1);
     console.log("What is the position", position);
@@ -45,12 +155,12 @@ const useGeneratefleet = () => {
         busy = false;
         let length = getRandomInt(0, 9);
         //Make sure the ship won't be placed outside the board
-        let row = getRandomInt(0, 10 - size);
+        let row = getRandomInt(0, 10 - shipObject.size);
         //Making sure it begins on the chosen position
         row = row - 1;
 
         //Check every position/coordinate if it's busy
-        for (let index = 0; index < size; index++) {
+        for (let index = 0; index < shipObject.size; index++) {
           row++;
           if (fleet[row][length].ship !== null) {
             console.log("OH NO... Busy");
@@ -60,24 +170,23 @@ const useGeneratefleet = () => {
 
         //If all the spaces are empty, add our ship object to the board
         if (busy === false) {
-          console.log("PASSED CHECK", size);
-          row = row - size;
-          for (let index = 0; index < size; index++) {
+          console.log("PASSED CHECK", shipObject.size);
+          row = row - shipObject.size;
+          for (let index = 0; index < shipObject.size; index++) {
             row++;
-            const found = ships.find((ship) => ship.size === size);
-            console.log("Found:", found)
-            fleet[row][length] = found;
+            //const found = ships.find((ship) => ship.shipObject === shipObject);
+            fleet[row][length].ship = shipObject;
           }
           generate = false;
         }
       } else {
         //Vertical placement
         busy = false;
-        let length = getRandomInt(0, 10 - size);
+        let length = getRandomInt(0, 10 - shipObject.size);
         let row = getRandomInt(0, 9);
         console.log("length:", length, "row: ", row);
         length = length - 1;
-        for (let index = 0; index < size; index++) {
+        for (let index = 0; index < shipObject.size; index++) {
           length++;
           if (fleet[row][length].ship !== null) {
             console.log("OH NO... Busy");
@@ -86,12 +195,11 @@ const useGeneratefleet = () => {
         }
         console.log("BUSY", busy);
         if (busy === false) {
-          console.log("PASSED CHECK", size);
-          length = length - size;
-          for (let index = 0; index < size; index++) {
+          console.log("PASSED CHECK", shipObject.size);
+          length = length - shipObject.size;
+          for (let index = 0; index < shipObject.size; index++) {
             length++;
-            const found = ships.find((ship) => ship.size === size);
-            fleet[row][length] = found;
+            fleet[row][length].ship = shipObject;
             console.log("FROM IF STATEMENT");
           }
           generate = false;
@@ -102,12 +210,12 @@ const useGeneratefleet = () => {
     }
   }
 
-  buildShip(4);
-  buildShip(3);
-  buildShip(2);
-  buildShip(2);
+  buildShip(ships[0]);
+  buildShip(ships[1]);
+  buildShip(ships[2]);
+  buildShip(ships[3]);
 
-  return [fleet]
+  return [fleet];
 };
 
 export default useGeneratefleet;

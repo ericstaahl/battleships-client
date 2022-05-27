@@ -8,11 +8,12 @@ const Gameboard = (props) => {
   //import the fleet and map it out
   const [fleet, setFleet] = useState(useGeneratefleet());
   const changeFleet = () => {
-    const newFleet = [...fleet]
-    console.log(JSON.stringify(newFleet[0][0][0]))
-    newFleet[0][0][0] = true
-    setFleet(newFleet)
-  }
+    const newFleet = [...fleet];
+    console.log(JSON.stringify(newFleet[0][0][0]));
+    newFleet[0][0][0] = true;
+    setFleet(newFleet);
+  };
+  console.log(fleet);
   return (
     <Container className="gameboard">
       {/* Reference row*/}
@@ -29,14 +30,23 @@ const Gameboard = (props) => {
             {props.columns[fleetIndex]}
           </Col>
           {fleet[0][fleetIndex].map((shipObject, index) => (
-            <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
+            <Col
+              className="square"
+              data-coords={[index + 1, fleetIndex + 1]}
+              key={index}
+            >
               <button
                 disabled={shipObject.hit}
                 className={`${shipObject.ship !== null ? "active" : ""}`}
                 value={shipObject}
-                onClick={(e) => console.log(shipObject, e.target.parentElement.getAttribute('data-coords'))}
+                onClick={(e) =>
+                  console.log(
+                    shipObject,
+                    e.target.parentElement.getAttribute("data-coords")
+                  )
+                }
               >
-                {(index + 1) + props.columns[fleetIndex]}
+                {index + 1 + props.columns[fleetIndex]}
               </button>
             </Col>
           ))}
