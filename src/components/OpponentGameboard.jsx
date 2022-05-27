@@ -41,7 +41,9 @@ const Gameboard = (props) => {
           </Col>
           {fleet[0][fleetIndex].map((shipObject, index) => (
             <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
+              {console.log(fleet[0][fleetIndex][index])}
               <button
+                disabled={fleet[0][fleetIndex][index]}
                 className={`${shipObject !== null ? "active" : ""}`}
                 value={shipObject}
                 onClick={(e) => {
