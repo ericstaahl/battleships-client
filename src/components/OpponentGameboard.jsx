@@ -5,20 +5,27 @@ import Row from "react-bootstrap/Row";
 import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 
+let initialBattleBoard = []
+// A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
+const generateBoard = () => {
+  // Create the rows
+  for (let rowIndex = 0; rowIndex < 10; rowIndex++) {
+    initialBattleBoard.push([])
+    // add 10 individual objects to the row
+    for (let index = 0; index < 10; index++) {
+      initialBattleBoard[rowIndex].push({hitShip: false, hitWater: false})
+    }
+  }
+}
+// run the function
+generateBoard()
+
 const Gameboard = (props) => {
   const socket = useSocketContext();
-  const [fleet, setFleet] = useState([[
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-  ]]);
+  // Initial state is equal to initialBattleBoard.
+  const [fleet, setFleet] = useState([
+    initialBattleBoard
+  ]);
 
   socket.on("coordinatesFromServer", (coordinates) => {
     console.log(typeof coordinates)
@@ -42,7 +49,7 @@ const Gameboard = (props) => {
           {fleet[0][fleetIndex].map((shipObject, index) => (
             <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
               <button
-                disabled={shipObject}
+                // disabled={shipObject}
                 className={`${shipObject !== null ? "active" : ""}`}
                 value={shipObject}
                 onClick={(e) => {

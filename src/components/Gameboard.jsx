@@ -52,7 +52,6 @@ const Gameboard = (props) => {
           ))}
         </Row>
       ))}
-      <button onClick={changeFleet}>Change board</button>
     </Container>
   );
 };
