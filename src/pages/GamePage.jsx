@@ -4,7 +4,7 @@ import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import useGeneratefleet from "../hooks/useGeneratefleet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OpponentGameBoard from "../components/OpponentGameboard";
 
 export default function GamePage() {
@@ -59,14 +59,25 @@ export default function GamePage() {
   const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
 
   const [flag, setFlag] = useState();
-  socket.on("playerTurn", (id) => {
-    if (socket.id === id) {
-      setFlag(false);
-      console.log("You get to start!!!", flag);
-    } else {
-      setFlag(true);
-      console.log("Aw it's the other players turn...", flag);
-    }
+
+  function changeFlag(boolean) {
+    setFlag(boolean);
+  }
+  useEffect(() => {
+    socket.on("playerTurn", (id) => {
+      if (socket.id === id) {
+        setFlag(false);
+        console.log("You get to start!!!", flag);
+      } else {
+        setFlag(true);
+        console.log("Aw it's the other players turn...", flag);
+      }
+    });
+  }, []);
+
+  socket.on("changeTurn", (msg) => {
+    console.log(msg);
+    setFlag(false);
   });
 
   return (
@@ -88,6 +99,7 @@ export default function GamePage() {
             columns={column}
             refs={ref}
             flagga={flag}
+            changeflagga={changeFlag}
           />
         </div>
       )}

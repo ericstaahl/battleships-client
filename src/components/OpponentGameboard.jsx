@@ -67,6 +67,9 @@ const Gameboard = (props) => {
                     "coordinates",
                     e.target.parentElement.getAttribute("data-coords")
                   );
+                  socket.emit("madeMyMove", "It's your turn");
+
+                  props.changeflagga(true);
                 }}
               >
                 {index + 1 + props.columns[fleetIndex]}
