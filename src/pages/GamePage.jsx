@@ -4,8 +4,8 @@ import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import useGeneratefleet from "../hooks/useGeneratefleet";
-import { useState } from "react";
-import OpponentGameBoard from "../components/OpponentGameboard"
+import { useState, useEffect } from "react";
+import OpponentGameBoard from "../components/OpponentGameboard";
 
 export default function GamePage() {
   // const fleet = useGeneratefleet();
@@ -58,6 +58,28 @@ export default function GamePage() {
 
   const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
 
+  const [flag, setFlag] = useState();
+
+  function changeFlag(boolean) {
+    setFlag(boolean);
+  }
+  useEffect(() => {
+    socket.on("playerTurn", (id) => {
+      if (socket.id === id) {
+        setFlag(false);
+        console.log("You get to start!!!", flag);
+      } else {
+        setFlag(true);
+        console.log("Aw it's the other players turn...", flag);
+      }
+    });
+  }, []);
+
+  socket.on("changeTurn", (msg) => {
+    console.log(msg);
+    setFlag(false);
+  });
+
   return (
     <>
       <h1>Battleships</h1>
@@ -69,10 +91,16 @@ export default function GamePage() {
       {gameFound && (
         <div className="gameUI">
           {/* First gameboard */}
-          <Gameboard rows={row} columns={column} refs={ref} />
+          <Gameboard rows={row} columns={column} refs={ref} flagga={flag} />
 
           {/* Second gameboard */}
-          <OpponentGameBoard rows={row} columns={column} refs={ref} />
+          <OpponentGameBoard
+            rows={row}
+            columns={column}
+            refs={ref}
+            flagga={flag}
+            changeflagga={changeFlag}
+          />
         </div>
       )}
     </>
