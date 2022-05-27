@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const useGeneratefleet = () => {
   const fleet = [
-    [{hit: true, ship: null}, {hit: true, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
+    [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
     [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
     [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],
     [{hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}, {hit: false, ship: null}],

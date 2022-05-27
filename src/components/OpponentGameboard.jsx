@@ -8,7 +8,7 @@ import { useState } from "react";
 const Gameboard = (props) => {
   const socket = useSocketContext();
   const [fleet, setFleet] = useState([[
-    [true, null, true, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
