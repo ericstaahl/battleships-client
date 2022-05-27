@@ -8,7 +8,7 @@ import { useState } from "react";
 const Gameboard = (props) => {
   const socket = useSocketContext();
   const [fleet, setFleet] = useState([[
-    [null, null, null, null, null, null, null, null, null, null],
+    [true, null, true, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
@@ -41,9 +41,8 @@ const Gameboard = (props) => {
           </Col>
           {fleet[0][fleetIndex].map((shipObject, index) => (
             <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
-              {console.log(fleet[0][fleetIndex][index])}
               <button
-                disabled={fleet[0][fleetIndex][index]}
+                disabled={shipObject}
                 className={`${shipObject !== null ? "active" : ""}`}
                 value={shipObject}
                 onClick={(e) => {
