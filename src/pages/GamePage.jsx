@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSocketContext } from "../contexts/SocketContext";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
@@ -13,24 +13,33 @@ export default function GamePage() {
   const socket = useSocketContext();
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
-  socket.on("connected", (text) => {
-    console.log(text);
-  });
+
   const joinGame = () => {
     setGameFound(false);
     setWaitingForGame(true);
     socket.emit("joinGame");
   };
-  socket.on("HiRoom", () => {
-    console.log("Server said hi to your room");
-  });
-  socket.on("gameFound", () => {
-    setWaitingForGame(false);
-    setGameFound(true);
-  });
-  socket.on("userLeft", (message) => {
-    console.log(message);
-  });
+
+  useEffect(() => {
+
+    socket.on("connected", (text) => {
+      console.log(text);
+    });
+
+    socket.on("HiRoom", () => {
+      console.log("Server said hi to your room");
+    });
+
+    socket.on("gameFound", () => {
+      setWaitingForGame(false);
+      setGameFound(true);
+    });
+
+    socket.on("userLeft", (message) => {
+      console.log(message);
+    });
+  }, [])
+  
   const [row, setRows] = useState([
     "1",
     "2",
