@@ -1,128 +1,23 @@
-import { useState, useEffect } from "react";
 
 const useGeneratefleet = (ships, handleShipsState) => {
-  const fleet = [
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-    [
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-      { hit: false, ship: null },
-    ],
-  ];
+  let initialBattleBoard = []
+  // A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
+  const generateBoard = () => {
+    // Create the rows
+    for (let rowIndex = 0; rowIndex < 10; rowIndex++) {
+      initialBattleBoard.push([])
+      // add 10 individual objects to the row
+      for (let index = 0; index < 10; index++) {
+        initialBattleBoard[rowIndex].push({ hit: false, ship: null, coords: [index + 1, rowIndex + 1]})
+      }
+    }
+  }
+  // run the function
+  generateBoard()
+
+  const fleet = 
+    initialBattleBoard
+  ;
   // for (let index = 0; index < 100; index++) {
   //   const box = {hit: false, ship: {hit: false, ship: null}}
   //   fleet.push(box)
@@ -171,10 +66,11 @@ const useGeneratefleet = (ships, handleShipsState) => {
             //const found = ships.find((ship) => ship.shipObject === shipObject);
             fleet[row][length].ship = shipObject;
             // Hopefully create a two way data binding between the current "box" and the ships object
-            const newShips = [...ships]
+            // const newShips = [...ships]
             console.log("Index in the ships object:", shipsObjectIndex)
-            newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
-            handleShipsState(newShips)
+            // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
+            shipObject.boxes[index] = fleet[row][length]
+            // handleShipsState(newShips)
           }
           generate = false;
         }
