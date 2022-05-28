@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useGeneratefleet = () => {
+const useGeneratefleet = (ships, handleShipsState) => {
   const fleet = [
     [
       { hit: false, ship: null },
@@ -128,12 +128,6 @@ const useGeneratefleet = () => {
   //   fleet.push(box)
   // }
 
-  const [ships, setShips] = useState([
-    { size: 4, sunk: false },
-    { size: 3, sunk: false },
-    { size: 2, sunk: false },
-    { size: 2, sunk: false },
-  ]);
 
   //Function to get a random number
   function getRandomInt(min, max) {
@@ -141,7 +135,7 @@ const useGeneratefleet = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  function buildShip(shipObject) {
+  function buildShip(shipObject, shipsObjectIndex) {
     //Randomize a position
     let position = getRandomInt(0, 1);
     console.log("What is the position", position);
@@ -176,6 +170,11 @@ const useGeneratefleet = () => {
             row++;
             //const found = ships.find((ship) => ship.shipObject === shipObject);
             fleet[row][length].ship = shipObject;
+            // Hopefully create a two way data binding between the current "box" and the ships object
+            const newShips = [...ships]
+            console.log("Index in the ships object:", shipsObjectIndex)
+            newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
+            handleShipsState(newShips)
           }
           generate = false;
         }
@@ -201,6 +200,12 @@ const useGeneratefleet = () => {
             length++;
             fleet[row][length].ship = shipObject;
             console.log("FROM IF STATEMENT");
+
+            // // Hopefully create a two way data binding between the current "box" and the ships object
+            // const newShips = [...ships]
+            // console.log("Index in the ships object:", shipsObjectIndex)
+            // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
+            // handleShipsState(newShips)
           }
           generate = false;
         }
@@ -210,10 +215,10 @@ const useGeneratefleet = () => {
     }
   }
 
-  buildShip(ships[0]);
-  buildShip(ships[1]);
-  buildShip(ships[2]);
-  buildShip(ships[3]);
+  buildShip(ships[0], 0);
+  buildShip(ships[1], 1);
+  buildShip(ships[2], 2);
+  buildShip(ships[3], 3);
 
   return [fleet];
 };

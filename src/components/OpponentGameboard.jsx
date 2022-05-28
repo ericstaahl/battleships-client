@@ -13,7 +13,7 @@ const generateBoard = () => {
     initialBattleBoard.push([])
     // add 10 individual objects to the row
     for (let index = 0; index < 10; index++) {
-      initialBattleBoard[rowIndex].push({hitShip: false, hitWater: false})
+      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false })
     }
   }
 }
@@ -49,7 +49,7 @@ const Gameboard = (props) => {
           {fleet[0][fleetIndex].map((shipObject, index) => (
             <Col className="square" data-coords={[index + 1, fleetIndex + 1]} key={index}>
               <button
-                // disabled={shipObject}
+                disabled={shipObject.hitShip === true || shipObject.hitWater === true}
                 className={`${shipObject !== null ? "active" : ""}`}
                 value={shipObject}
                 onClick={(e) => {
@@ -62,8 +62,9 @@ const Gameboard = (props) => {
             </Col>
           ))}
         </Row>
-      ))}
-    </Container>
+      ))
+    }
+    </Container >
   );
 };
 

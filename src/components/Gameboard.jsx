@@ -5,9 +5,21 @@ import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 
 const Gameboard = (props) => {
+  const [ships, setShips] = useState([
+    { size: 4, sunk: false, boxes: {} },
+    { size: 3, sunk: false, boxes: {} },
+    { size: 2, sunk: false, boxes: {} },
+    { size: 2, sunk: false, boxes: {} },
+  ]);
+
+  const handleShipsState = (ships) => {
+    setShips(ships)
+  }
+
   //import the fleet and map it out
-  const [fleet, setFleet] = useState(useGeneratefleet());
+  const [fleet, setFleet] = useState(useGeneratefleet(ships, handleShipsState));
   console.log(fleet);
+  
   return (
     <Container className="gameboard">
       {/* Reference row*/}
@@ -36,7 +48,7 @@ const Gameboard = (props) => {
                 onClick={(e) =>
                   console.log(
                     shipObject,
-                    e.target.parentElement.getAttribute("data-coords")
+                    e.target.parentElement.getAttribute("data-coords"),
                   )
                 }
               >
