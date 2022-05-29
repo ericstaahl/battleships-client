@@ -1,5 +1,6 @@
 
-const useGeneratefleet = (ships, handleShipsState) => {
+const useGeneratefleet = (ships) => {
+  console.log("generateFleet is running")
   let initialBattleBoard = []
   // A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
   const generateBoard = () => {
@@ -8,16 +9,18 @@ const useGeneratefleet = (ships, handleShipsState) => {
       initialBattleBoard.push([])
       // add 10 individual objects to the row
       for (let index = 0; index < 10; index++) {
-        initialBattleBoard[rowIndex].push({ hit: false, ship: null, coords: [index + 1, rowIndex + 1]})
+        initialBattleBoard[rowIndex].push({ hit: false, ship: null, coords: [index + 1, rowIndex + 1] })
       }
     }
   }
   // run the function
   generateBoard()
 
-  const fleet = 
+  const newShips = [...ships]
+
+  const fleet =
     initialBattleBoard
-  ;
+    ;
   // for (let index = 0; index < 100; index++) {
   //   const box = {hit: false, ship: {hit: false, ship: null}}
   //   fleet.push(box)
@@ -33,7 +36,6 @@ const useGeneratefleet = (ships, handleShipsState) => {
   function buildShip(shipObject, shipsObjectIndex) {
     //Randomize a position
     let position = getRandomInt(0, 1);
-    console.log("What is the position", position);
     let generate = true;
     let busy = false;
 
@@ -69,7 +71,7 @@ const useGeneratefleet = (ships, handleShipsState) => {
             // const newShips = [...ships]
             console.log("Index in the ships object:", shipsObjectIndex)
             // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
-            shipObject.boxes[index] = fleet[row][length]
+            fleet[row][length].ship.boxes.push(fleet[row][length])
             // handleShipsState(newShips)
           }
           generate = false;
@@ -102,6 +104,8 @@ const useGeneratefleet = (ships, handleShipsState) => {
             // console.log("Index in the ships object:", shipsObjectIndex)
             // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
             // handleShipsState(newShips)
+            fleet[row][length].ship.boxes[index] = fleet[row][length]
+
           }
           generate = false;
         }
@@ -111,12 +115,12 @@ const useGeneratefleet = (ships, handleShipsState) => {
     }
   }
 
-  buildShip(ships[0], 0);
-  buildShip(ships[1], 1);
-  buildShip(ships[2], 2);
-  buildShip(ships[3], 3);
+  buildShip(newShips[0], 0);
+  buildShip(newShips[1], 1);
+  buildShip(newShips[2], 2);
+  buildShip(newShips[3], 3);
 
-  return [fleet];
+  return { newFleet: [fleet], newShips: newShips };
 };
 
 export default useGeneratefleet;
