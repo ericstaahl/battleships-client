@@ -1,24 +1,30 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import useGeneratefleet from "../hooks/useGeneratefleet";
-import { useState } from "react";
+import Generatefleet from "../hooks/generateFleet";
+import { useEffect, useState } from "react";
 
 const Gameboard = (props) => {
   const [ships, setShips] = useState([
-    { size: 4, sunk: false, boxes: {} },
-    { size: 3, sunk: false, boxes: {} },
-    { size: 2, sunk: false, boxes: {} },
-    { size: 2, sunk: false, boxes: {} },
+    { size: 4, sunk: false, boxes: [] },
+    { size: 3, sunk: false, boxes: [] },
+    { size: 2, sunk: false, boxes: [] },
+    { size: 2, sunk: false, boxes: [] },
   ]);
 
-  const handleShipsState = (ships) => {
-    setShips(ships)
-  }
-
+  const [fleet, setFleet] = useState(null);
+  
   //import the fleet and map it out
-  const [fleet, setFleet] = useState(useGeneratefleet(ships, handleShipsState));
-  console.log(fleet);
+  useEffect(() => {
+    const {newFleet, newShips} = Generatefleet(ships)
+    setShips(newShips)
+    setFleet(newFleet)
+  }, [])
+ 
+
+  if (fleet === null) {
+    return <p>Loading...</p>
+  }
   
   return (
     <Container className="gameboard">
