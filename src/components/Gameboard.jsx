@@ -42,7 +42,15 @@ const Gameboard = (props) => {
             setShips(newShips)
           }
         })
+        // Check if ship has sunk
+        const shipPartsHit = ship.boxes.filter(box => box.hit === true)
+        console.log("Ship parts hit")
+        console.log(shipPartsHit)
+        if (shipPartsHit.length === ship.boxes.length) {
+          ship.sunk = true
+        }
       });
+
     });
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
