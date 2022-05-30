@@ -11,6 +11,7 @@ export default function GamePage() {
   // States to control wether a button can be pressed and to display messages.
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
+  const [gameInProgress, setGameInProgress] = useState(false)
 
   // Tell the server that the user wants to join a game
   const joinGame = () => {
@@ -32,6 +33,8 @@ export default function GamePage() {
     socket.on("gameFound", () => {
       setWaitingForGame(false);
       setGameFound(true);
+      setGameInProgress(true)
+      setGameFound(false);
     });
 
     socket.on("userLeft", (message) => {
@@ -90,7 +93,7 @@ export default function GamePage() {
     })
     socket.on('matchIsOver', () => {
       console.log("The match is over")
-      setGameFound(false)
+      setGameInProgress(false)
     })
   }, []);
 
@@ -103,7 +106,7 @@ export default function GamePage() {
       </Button>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
-      {gameFound && (
+      {gameInProgress && (
         <div className="gameUI">
           {/* First gameboard */}
           <Gameboard rows={row} columns={column} refs={ref} flagga={flag} />
