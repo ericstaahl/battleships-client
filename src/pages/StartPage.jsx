@@ -1,5 +1,7 @@
 import { Button, Form } from "react-bootstrap/";
 import { Link } from "react-router-dom";
+import Waves from "../components/Waves";
+
 
 const StartPage = () => {
   return (
@@ -50,6 +52,7 @@ const StartPage = () => {
             blanditiis maiores suscipit?
           </p>
         </div>
+        <Waves />
       </div>
     </>
   );
