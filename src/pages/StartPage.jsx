@@ -6,7 +6,7 @@ import Waves from "../components/Waves";
 const StartPage = () => {
   return (
     <>
-      <div className="ontainer">
+      <div className="container">
         <div className="form-box">
           <h1>BattleShips</h1>
 
@@ -30,7 +30,7 @@ const StartPage = () => {
               to="/gameboard"
               onClick=""
             >
-              Start Game
+              Go to lobby
             </Button>
           </Form>
         </div>
@@ -39,17 +39,20 @@ const StartPage = () => {
           <h2>How to play BattleShips!</h2>
 
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            praesentium accusamus excepturi esse, iste architecto aspernatur
-            alias ullam numquam temporibus asperiores cumque ab voluptatum illo,
-            veniam magni porro ex. Minus.
+            When you play Battleships you will see two boards, 
+            one that shows where your ships are and one that shows 
+            a blank board where you are supposed to guess where your opponets
+            ships are! When you have destroyed all your opponents ships the game ends
+            or when they have destroyed yours.
           </p>
 
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. At ex
-            culpa soluta labore aut aperiam eos ipsum repellendus delectus
-            neque. Aspernatur consequatur exercitationem iste unde a debitis
-            blanditiis maiores suscipit?
+            To do this you have to click on a box that you think the ship is on! 
+            If you guess correctly the box will turn green but if you missed and 
+            hit water it will turn red. There are four boats, two that are 2 boxes long
+            one that is 3 and one that is four.
+            You will be able to see how many boats your opponent got left. 
+            You will take turns shooting and who starts is random.
           </p>
         </div>
         <Waves />
