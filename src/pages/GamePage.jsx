@@ -2,7 +2,7 @@ import React from "react";
 import { useSocketContext } from "../contexts/SocketContext";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState, useEffect } from "react";
 import OpponentGameBoard from "../components/OpponentGameboard";
@@ -84,6 +84,14 @@ export default function GamePage() {
   return (
     <>
       <h1>Battleships</h1>
+      <Form>
+        <Form.Group>
+          <Form.Control type="submit" placeholder="Name, please." />
+          <Form.Text className="text-muted">
+            Enter your name here.
+          </Form.Text>
+        </Form.Group>
+      </Form>
       <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
         Join game
       </Button>
