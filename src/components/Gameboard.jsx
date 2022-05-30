@@ -23,7 +23,11 @@ const Gameboard = (props) => {
     const { newFleet, newShips } = generateFleet(ships)
     setShips(newShips)
     setFleet(newFleet)
+    // Cleanup function that runs when the component is unmounted.
+    // Stops listening for "coordinatesFromServer".
+  }, [])
 
+  useEffect(() => {
     socket.on("coordinatesFromServer", (coordinates) => {
       console.log(typeof coordinates);
       console.log("Coords from server:", coordinates);
@@ -46,7 +50,6 @@ const Gameboard = (props) => {
       socket.off("coordinatesFromServer")
     }
   }, [])
-
 
   if (fleet === null) {
     return <p>Loading...</p>
