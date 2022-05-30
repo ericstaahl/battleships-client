@@ -26,12 +26,12 @@ const Gameboard = (props) => {
 
   // //Testing if it disables the one that got hit even though the rest are disabled
   // fleet[0][0][0].hitShip = true;
-  useEffect(() => {
-    socket.on("coordinatesFromServer", (coordinates) => {
-      console.log(typeof coordinates);
-      console.log("Coords from server:", coordinates);
-    });
-  }, [])
+  // useEffect(() => {
+  //   socket.on("coordinatesFromServer", (coordinates) => {
+  //     console.log(typeof coordinates);
+  //     console.log("Coords from server:", coordinates);
+  //   });
+  // }, [])
   
   return (
     <Container className="gameboard">
