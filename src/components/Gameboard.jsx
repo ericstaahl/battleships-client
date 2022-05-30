@@ -3,8 +3,11 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import generateFleet from "../helpers/generateFleet";
 import { useEffect, useState } from "react";
+import { useSocketContext } from "../contexts/SocketContext";
 
 const Gameboard = (props) => {
+  const socket = useSocketContext();
+
   const [ships, setShips] = useState([
     { size: 4, sunk: false, boxes: [] },
     { size: 3, sunk: false, boxes: [] },
@@ -20,6 +23,29 @@ const Gameboard = (props) => {
     const {newFleet, newShips} = generateFleet(ships)
     setShips(newShips)
     setFleet(newFleet)
+
+    socket.on("coordinatesFromServer", (coordinates) => {
+      console.log(typeof coordinates);
+      console.log("Coords from server:", coordinates);
+      const newShips = [...ships]
+
+      newShips.forEach(ship => {
+        ship.boxes.find(box => {
+          console.log("Find is running")
+          console.log(box.coords.toString())
+          if (box.coords.toString() === coordinates) {
+            console.log("If is running")
+            box.hit = true
+            setShips(newShips)
+          }
+        })
+      });
+    });
+    // Cleanup function that runs when the component is unmounted.
+    // Stops listening for "coordinatesFromServer".
+    return () => {
+      socket.off("coordinatesFromServer")
+    }
   }, [])
  
 
@@ -49,7 +75,6 @@ const Gameboard = (props) => {
               key={index}
             >
               <button
-                disabled={shipObject.hit}
                 className={`${shipObject.ship !== null ? "active" : ""}`}
                 value={shipObject}
                 onClick={(e) =>
