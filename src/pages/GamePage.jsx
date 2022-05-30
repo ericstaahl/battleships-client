@@ -85,6 +85,9 @@ export default function GamePage() {
       console.log(msg);
       setFlag(false);
     });
+    socket.on('win', () => {
+      console.log("Congratulations, you won!")
+    })
   }, []);
 
 
