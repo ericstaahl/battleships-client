@@ -14,13 +14,13 @@ const Gameboard = (props) => {
     { size: 2, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
   ]);
-  
+
   const [fleet, setFleet] = useState(null);
-  
+
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-    const {newFleet, newShips} = generateFleet(ships)
+    const { newFleet, newShips } = generateFleet(ships)
     setShips(newShips)
     setFleet(newFleet)
 
@@ -28,13 +28,12 @@ const Gameboard = (props) => {
       console.log(typeof coordinates);
       console.log("Coords from server:", coordinates);
       const newShips = [...ships]
-
+      
       newShips.forEach(ship => {
-        ship.boxes.find(box => {
-          console.log("Find is running")
-          console.log(box.coords.toString())
+        ship.boxes.forEach(box => {
           if (box.coords.toString() === coordinates) {
             console.log("If is running")
+            console.log(box)
             box.hit = true
             setShips(newShips)
           }
@@ -47,12 +46,12 @@ const Gameboard = (props) => {
       socket.off("coordinatesFromServer")
     }
   }, [])
- 
+
 
   if (fleet === null) {
     return <p>Loading...</p>
   }
-  
+
   return (
     <Container className="gameboard">
       {/* Reference row*/}
@@ -75,7 +74,7 @@ const Gameboard = (props) => {
               key={index}
             >
               <button
-                className={`${shipObject.ship !== null ? "active" : ""}`}
+                className={`${shipObject.ship !== null ? "active" : ""} ${shipObject.hit === true ? "hit" : ""}`}
                 value={shipObject}
                 onClick={(e) =>
                   console.log(
