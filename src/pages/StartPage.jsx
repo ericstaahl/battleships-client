@@ -7,23 +7,11 @@ const StartPage = () => {
   return (
     <>
       <div className="container">
-        <div className="form-box">
+        <div className="button-box">
           <h1>BattleShips</h1>
-
-          <Form className="text-center">
-            <Form.Group className="group-form col-xs-2">
-              <Form.Control
-                className="form-input"
-                id="form-input-name"
-                type="text"
-                placeholder="Name, please."
-              />
-
-              <Form.Text>Please, enter your name here.</Form.Text>
-            </Form.Group>
-
             <Button
               className="join-button"
+              size="lg"
               id="join-button-id"
               variant="info"
               as={Link}
@@ -32,7 +20,6 @@ const StartPage = () => {
             >
               Go to lobby
             </Button>
-          </Form>
         </div>
 
         <div className="rules">

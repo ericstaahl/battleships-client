@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState, useEffect } from "react";
 import OpponentGameBoard from "../components/OpponentGameboard";
+import Waves from "../components/Waves";
 
 export default function GamePage() {
   // const fleet = useGeneratefleet();
@@ -83,7 +84,7 @@ export default function GamePage() {
   return (
     <>
       <h1>Battleships</h1>
-      <Button className="w-auto" disabled={waitingForGame} onClick={joinGame}>
+      <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
         Join game
       </Button>
       {waitingForGame && <p>Waiting for a game...</p>}
@@ -103,6 +104,7 @@ export default function GamePage() {
           />
         </div>
       )}
+      <Waves />
     </>
   );
 }
