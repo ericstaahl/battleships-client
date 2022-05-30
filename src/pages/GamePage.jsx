@@ -81,12 +81,12 @@ export default function GamePage() {
         console.log("Aw it's the other players turn...", flag);
       }
     });
+    socket.on("changeTurn", (msg) => {
+      console.log(msg);
+      setFlag(false);
+    });
   }, []);
 
-  socket.on("changeTurn", (msg) => {
-    console.log(msg);
-    setFlag(false);
-  });
 
   return (
     <>
