@@ -88,6 +88,10 @@ export default function GamePage() {
     socket.on('win', () => {
       console.log("Congratulations, you won!")
     })
+    socket.on('matchIsOver', () => {
+      console.log("The match is over")
+      setGameFound(false)
+    })
   }, []);
 
 
