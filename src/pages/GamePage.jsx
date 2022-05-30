@@ -3,25 +3,25 @@ import { useSocketContext } from "../contexts/SocketContext";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
-// import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState } from "react";
 import OpponentGameBoard from "../components/OpponentGameboard"
 
 export default function GamePage() {
-  // const fleet = useGeneratefleet();
-  // console.log("from gamepage, fleet", fleet);
+  // get socket from the socket context.
   const socket = useSocketContext();
+  // States to control wether a button can be pressed and to display messages.
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
 
+  // Tell the server that the user wants to join a game
   const joinGame = () => {
     setGameFound(false);
     setWaitingForGame(true);
     socket.emit("joinGame");
   };
 
+  // Start listening on the following emits
   useEffect(() => {
-
     socket.on("connected", (text) => {
       console.log(text);
     });

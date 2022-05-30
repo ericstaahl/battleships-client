@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Generatefleet from "../hooks/generateFleet";
+import generateFleet from "../hooks/generateFleet";
 import { useEffect, useState } from "react";
 
 const Gameboard = (props) => {
@@ -11,12 +11,13 @@ const Gameboard = (props) => {
     { size: 2, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
   ]);
-
+  
   const [fleet, setFleet] = useState(null);
   
-  //import the fleet and map it out
+  // Import the fleet and map it out
+  // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-    const {newFleet, newShips} = Generatefleet(ships)
+    const {newFleet, newShips} = generateFleet(ships)
     setShips(newShips)
     setFleet(newFleet)
   }, [])

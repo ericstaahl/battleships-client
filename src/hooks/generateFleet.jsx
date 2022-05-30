@@ -65,14 +65,10 @@ const useGeneratefleet = (ships) => {
           row = row - shipObject.size;
           for (let index = 0; index < shipObject.size; index++) {
             row++;
-            //const found = ships.find((ship) => ship.shipObject === shipObject);
             fleet[row][length].ship = shipObject;
-            // Hopefully create a two way data binding between the current "box" and the ships object
-            // const newShips = [...ships]
+            // Create a circular reference between the current "box" and the ships object
             console.log("Index in the ships object:", shipsObjectIndex)
-            // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
             fleet[row][length].ship.boxes.push(fleet[row][length])
-            // handleShipsState(newShips)
           }
           generate = false;
         }
@@ -99,11 +95,7 @@ const useGeneratefleet = (ships) => {
             fleet[row][length].ship = shipObject;
             console.log("FROM IF STATEMENT");
 
-            // // Hopefully create a two way data binding between the current "box" and the ships object
-            // const newShips = [...ships]
-            // console.log("Index in the ships object:", shipsObjectIndex)
-            // newShips[shipsObjectIndex].boxes[index] = fleet[row][length]
-            // handleShipsState(newShips)
+            // Create a circular reference between the current "box" and the ships object
             fleet[row][length].ship.boxes[index] = fleet[row][length]
 
           }
@@ -115,11 +107,13 @@ const useGeneratefleet = (ships) => {
     }
   }
 
+  // Use the copy of the ships object instead
   buildShip(newShips[0], 0);
   buildShip(newShips[1], 1);
   buildShip(newShips[2], 2);
   buildShip(newShips[3], 3);
 
+  // Return both the new fleet and the new ships object
   return { newFleet: [fleet], newShips: newShips };
 };
 
