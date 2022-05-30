@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import Waves from "../components/Waves";
 
 
+
 const StartPage = () => {
   return (
     <>
       <div className="container">
+        <Header />
         <div className="button-box">
           <h1>BattleShips</h1>
             <Button
