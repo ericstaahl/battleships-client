@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import generateFleet from "../hooks/generateFleet";
+import generateFleet from "../helpers/generateFleet";
 import { useEffect, useState } from "react";
 
 const Gameboard = (props) => {
