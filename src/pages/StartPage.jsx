@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap/";
 import { Link } from "react-router-dom";
 import Waves from "../components/Waves";
+import Header from "../components/Header";
 
 
 

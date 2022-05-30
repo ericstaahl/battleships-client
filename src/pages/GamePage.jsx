@@ -7,6 +7,7 @@ import useGeneratefleet from "../hooks/useGeneratefleet";
 import { useState, useEffect } from "react";
 import OpponentGameBoard from "../components/OpponentGameboard";
 import Waves from "../components/Waves";
+import Header from "../components/Header";
 
 export default function GamePage() {
   // const fleet = useGeneratefleet();
@@ -83,18 +84,12 @@ export default function GamePage() {
 
   return (
     <>
-      <h1>Battleships</h1>
-      <Form>
-        <Form.Group>
-          <Form.Control type="submit" placeholder="Name, please." />
-          <Form.Text className="text-muted">
-            Enter your name here.
-          </Form.Text>
-        </Form.Group>
-      </Form>
+      <Header />
+      <div className="text-center">
       <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
         Join game
       </Button>
+      </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
       {gameFound && (
