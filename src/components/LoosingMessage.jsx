@@ -1,5 +1,6 @@
 import React from 'react'
 import {Alert, Button} from 'react-bootstrap'
+import { Link } from "react-router-dom"
 
 export default function LoosingMessage() {
   return (
@@ -12,7 +13,8 @@ export default function LoosingMessage() {
         className="play-again-button"
         id="play-again"
         variant="info"
-        onclick="">
+        as={Link}
+        to="/">
             Play Again?
         </Button>
 
