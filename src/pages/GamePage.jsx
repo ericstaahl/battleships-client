@@ -92,14 +92,20 @@ export default function GamePage() {
         setAlert("danger");
       }
     });
+    socket.on("changeTurn", (msg) => {
+      console.log(msg);
+      setFlag(false);
+      setAlert("success");
+      setMessage("Yay It's your turn!");
+    });
+    socket.on("win", () => {
+      console.log("Congratulations, you won!");
+    });
+    socket.on("matchIsOver", () => {
+      console.log("The match is over");
+      setGameFound(false);
+    });
   }, []);
-
-  socket.on("changeTurn", (msg) => {
-    console.log(msg);
-    setFlag(false);
-    setAlert("success");
-    setMessage("Yay It's your turn!");
-  });
 
   return (
     <>

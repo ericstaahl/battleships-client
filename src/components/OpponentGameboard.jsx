@@ -2,7 +2,7 @@ import { useSocketContext } from "../contexts/SocketContext";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 let initialBattleBoard = [];
 // A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
@@ -24,13 +24,15 @@ const Gameboard = (props) => {
   // Initial state is equal to initialBattleBoard.
   const [fleet, setFleet] = useState([initialBattleBoard]);
 
-  //Testing if it disables the one that got hit even though the rest are disabled
-  fleet[0][0][0].hitShip = true;
-
-  socket.on("coordinatesFromServer", (coordinates) => {
-    console.log(typeof coordinates);
-    console.log("Coords from server:", coordinates);
-  });
+  // //Testing if it disables the one that got hit even though the rest are disabled
+  // fleet[0][0][0].hitShip = true;
+  // useEffect(() => {
+  //   socket.on("coordinatesFromServer", (coordinates) => {
+  //     console.log(typeof coordinates);
+  //     console.log("Coords from server:", coordinates);
+  //   });
+  // }, [])
+  
   return (
     <Container className="gameboard opponent">
       {/* Reference row*/}
