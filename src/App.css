@@ -1,17 +1,20 @@
-
-
 .App {
   text-align: center;
 }
 
- html,body {
-   height: 100%;
-   background-color: rgb(52, 120, 223); 
-   background: rgb(38,134,210);
-   background: linear-gradient(180deg, rgba(38,134,210,1) 0%, rgba(197,236,240,1) 100%);
-   background-size: cover;
-   background-repeat: no-repeat; 
-} 
+html,
+body {
+  height: 100%;
+  background-color: rgb(52, 120, 223);
+  background: rgb(38, 134, 210);
+  background: linear-gradient(
+    180deg,
+    rgba(38, 134, 210, 1) 0%,
+    rgba(197, 236, 240, 1) 100%
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 #App {
   display: flex;
@@ -74,6 +77,10 @@ button {
 
 .active {
   background-color: chartreuse;
+}
+
+.miss {
+  background-color: red;
 }
 
 .hit {

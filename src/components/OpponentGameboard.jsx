@@ -25,14 +25,14 @@ const Gameboard = (props) => {
   const [fleet, setFleet] = useState([initialBattleBoard]);
 
   // //Testing if it disables the one that got hit even though the rest are disabled
-  // fleet[0][0][0].hitShip = true;
+  //fleet[0][0][0].hitWater = true;
   // useEffect(() => {
   //   socket.on("coordinatesFromServer", (coordinates) => {
   //     console.log(typeof coordinates);
   //     console.log("Coords from server:", coordinates);
   //   });
   // }, [])
-  
+
   return (
     <Container className="gameboard opponent">
       {/* Reference row*/}
@@ -57,8 +57,12 @@ const Gameboard = (props) => {
               <button
                 // disabled={shipObject.hitShip === true || shipObject.hitWater === true}
                 // //disabled={shipObject.hitShip === true || shipObject.hitWater === true}
-                disabled={props.flagga || shipObject.hitShip}
-                className={`${shipObject.hitShip === true ? "active" : ""}`}
+                disabled={
+                  props.flagga || shipObject.hitShip || shipObject.hitWater
+                }
+                className={`${shipObject.hitShip === true ? "active" : ""} ${
+                  shipObject.hitWater === true ? "miss" : ""
+                }`}
                 value={shipObject}
                 onClick={(e) => {
                   console.log(
