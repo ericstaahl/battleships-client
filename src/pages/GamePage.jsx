@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSocketContext } from "../contexts/SocketContext";
 import "../App.css";
 import Gameboard from "../components/Gameboard";
+import Waves from "../components/Waves";
+import Header from "../components/Header";
 import { Button } from "react-bootstrap";
 import OpponentGameBoard from "../components/OpponentGameboard";
 import Alert from "react-bootstrap/Alert";
+
 
 export default function GamePage() {
   // get socket from the socket context.
@@ -112,10 +115,12 @@ export default function GamePage() {
 
   return (
     <>
-      <h1>Battleships</h1>
-      <Button className="w-auto" disabled={waitingForGame} onClick={joinGame}>
+      <Header />
+      <div className="text-center">
+      <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
         Join game
       </Button>
+      </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
       {gameInProgress && (
@@ -138,6 +143,7 @@ export default function GamePage() {
           />
         </div>
       )}
+      <Waves />
     </>
   );
 }
