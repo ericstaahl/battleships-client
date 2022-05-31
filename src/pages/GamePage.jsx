@@ -4,6 +4,7 @@ import "../App.css";
 import Gameboard from "../components/Gameboard";
 import { Button } from "react-bootstrap";
 import OpponentGameBoard from "../components/OpponentGameboard";
+import Alert from "react-bootstrap/Alert";
 
 export default function GamePage() {
   // get socket from the socket context.
@@ -40,8 +41,8 @@ export default function GamePage() {
     socket.on("userLeft", (message) => {
       console.log(message);
     });
-  }, [])
-  
+  }, []);
+
   const [row, setRows] = useState([
     "1",
     "2",
@@ -67,26 +68,38 @@ export default function GamePage() {
     "J",
   ]);
 
+  const [alert, setAlert] = useState("success");
+  const [message, setMessage] = useState("Yay It's your turn!");
+
   const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
 
   const [flag, setFlag] = useState();
 
-  function changeFlag(boolean) {
+  function changeFlag(boolean, string, message) {
     setFlag(boolean);
+    setAlert(string);
+    setMessage(message);
   }
+
   useEffect(() => {
     socket.on("playerTurn", (id) => {
       if (socket.id === id) {
         setFlag(false);
         console.log("You get to start!!!", flag);
+        setMessage("Yay It's your turn!");
+        setAlert("success");
       } else {
         setFlag(true);
         console.log("Aw it's the other players turn...", flag);
+        setMessage("Aw it's the other players turn...");
+        setAlert("danger");
       }
     });
     socket.on("changeTurn", (msg) => {
       console.log(msg);
       setFlag(false);
+      setAlert("success");
+      setMessage("Yay It's your turn!");
     });
     socket.on('win', () => {
       console.log("Congratulations, you won!")
@@ -96,7 +109,6 @@ export default function GamePage() {
       setGameInProgress(false)
     })
   }, []);
-
 
   return (
     <>
@@ -109,7 +121,12 @@ export default function GamePage() {
       {gameInProgress && (
         <div className="gameUI">
           {/* First gameboard */}
-          <Gameboard rows={row} columns={column} refs={ref} flagga={flag} />
+          <div className="turn">
+            <Alert key={alert} variant={alert}>
+              {message}
+            </Alert>
+            <Gameboard rows={row} columns={column} refs={ref} flagga={flag} />
+          </div>
 
           {/* Second gameboard */}
           <OpponentGameBoard

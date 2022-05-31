@@ -12,7 +12,7 @@ const generateBoard = () => {
     initialBattleBoard.push([]);
     // add 10 individual objects to the row
     for (let index = 0; index < 10; index++) {
-      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false })
+      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false });
     }
   }
 };
@@ -34,7 +34,7 @@ const Gameboard = (props) => {
   // }, [])
   
   return (
-    <Container className="gameboard">
+    <Container className="gameboard opponent">
       {/* Reference row*/}
       <Row className="rad">
         {props.refs.map((letter, index) => (
@@ -71,7 +71,11 @@ const Gameboard = (props) => {
                   );
                   socket.emit("madeMyMove", "It's your turn");
 
-                  props.changeflagga(true);
+                  props.changeflagga(
+                    true,
+                    "danger",
+                    "Aw it's the other players turn..."
+                  );
                 }}
               >
                 {index + 1 + props.columns[fleetIndex]}
@@ -79,9 +83,8 @@ const Gameboard = (props) => {
             </Col>
           ))}
         </Row>
-      ))
-    }
-    </Container >
+      ))}
+    </Container>
   );
 };
 
