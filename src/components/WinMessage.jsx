@@ -3,7 +3,7 @@ import React from 'react'
 export default function WinMessage() {
   return (
     <Alert variant="success">
-        Congrats! You won this round!
+     <h2>Congrats! You won this round!</h2>
 
         <hr />
 

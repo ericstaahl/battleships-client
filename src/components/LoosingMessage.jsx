@@ -3,7 +3,7 @@ import React from 'react'
 export default function LoosingMessage() {
   return (
     <Alert variant="warning">
-        Oh, no! All your ships got destroyed you lost this round!
+        <h2>Oh, no! All your ships got destroyed you lost this round!</h2>
 
         <hr />
 
