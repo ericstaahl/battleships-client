@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import generateFleet from "../helpers/generateFleet"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useSocketContext } from "../contexts/SocketContext"
 
 
@@ -19,23 +19,25 @@ const Gameboard = (props) => {
 
   const [fleet, setFleet] = useState(null)
   let nyFleet = null
-  function callFleet(fleet) {
-    console.log("THIS IS THE FLEET OMG", fleet)
-    nyFleet = [...fleet]
-  }
+  const callFleet = useCallback(
+    (fleet) => {
+      console.log("THIS IS THE FLEET OMG", fleet)
+      nyFleet = [...fleet]
+    }, [fleet])
 
 
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-
-    const { newFleet, newShips } = generateFleet(ships)
-    setShips(newShips)
-    setFleet(newFleet, callFleet(newFleet))
+    if (fleet === null) {
+      const { newFleet, newShips } = generateFleet(ships)
+      setShips(newShips)
+      setFleet(newFleet, callFleet(newFleet))
+    }
 
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
-  }, [])
+  }, [callFleet, ships, fleet])
 
   useEffect(() => {
     socket.on("coordinatesFromServer", (coordinates) => {
@@ -66,7 +68,7 @@ const Gameboard = (props) => {
 
             wasHit = true
             //coordsHit = box.coords
- 
+
           }
         });
         // Check if ship has sunk
@@ -131,9 +133,8 @@ const Gameboard = (props) => {
                 key={index}
               >
                 <button
-                  className={`${shipObject.ship !== null ? "active" : ""} ${
-                    shipObject.hit === "splash" ? "water" : ""
-                  } ${shipObject.hit === true ? "hit" : ""}`}
+                  className={`${shipObject.ship !== null ? "active" : ""} ${shipObject.hit === "splash" ? "water" : ""
+                    } ${shipObject.hit === true ? "hit" : ""}`}
                   value={shipObject}
                   onClick={(e) =>
                     console.log(
