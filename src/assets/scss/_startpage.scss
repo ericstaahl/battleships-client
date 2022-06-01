@@ -1,19 +1,14 @@
 // Scss for _startpage.scss
 
-.container {
-  h1 {
-    text-align: center;
+.button-box {
+  align-items: center;
+
+    .join-button {
+      margin-top: 20px;
+      margin-bottom: 20px;
   }
 }
 
-.button-box {
-  align-items: center;
-}
-
-.join-button {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
 
 .rules {
   background-color:dodgerblue;
