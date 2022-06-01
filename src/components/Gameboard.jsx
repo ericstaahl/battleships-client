@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { useSocketContext } from "../contexts/SocketContext";
 import LoosingMessage from "./LoosingMessage";
 
-
-
 const Gameboard = (props) => {
   const socket = useSocketContext();
 
@@ -19,13 +17,18 @@ const Gameboard = (props) => {
   ]);
 
   const [fleet, setFleet] = useState(null);
+  let nyFleet = null;
+  function callFleet(fleet) {
+    console.log("THIS IS THE FLEET OMG", fleet);
+    nyFleet = [...fleet];
+  }
 
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
     const { newFleet, newShips } = generateFleet(ships);
     setShips(newShips);
-    setFleet(newFleet);
+    setFleet(newFleet, callFleet(newFleet));
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
   }, []);
@@ -35,8 +38,17 @@ const Gameboard = (props) => {
       console.log(typeof coordinates);
       console.log("Coords from server:", coordinates);
       const newShips = [...ships];
+      //const newFleet = [...fleet];
       let wasHit = false;
-      let coordsHit = null
+      //let coordsHit = null
+
+      const newCo = coordinates.split(",");
+      const co1 = parseInt(newCo[0]);
+      const co2 = parseInt(newCo[1]);
+
+      console.log(co1, co2);
+
+      console.log("FLEEEEEEEEEEEEEEET", nyFleet);
 
       newShips.forEach((ship) => {
         ship.boxes.forEach((box) => {
@@ -44,9 +56,9 @@ const Gameboard = (props) => {
             console.log("If is running");
             console.log(box);
             box.hit = true;
-            
-            wasHit = true
-            coordsHit = box.coords
+
+            wasHit = true;
+            //coordsHit = box.coords
           }
         });
         // Check if ship has sunk
@@ -57,13 +69,20 @@ const Gameboard = (props) => {
           ship.sunk = true;
         }
       });
-      
+
       const sunkShips = newShips.filter((ship) => ship.sunk === true);
       if (sunkShips.length === 4) {
         socket.emit("gameOver");
-        props.handleSetLose()
+        props.handleSetLose();
       }
-      socket.emit('resultOfHit', {wasHit, coordsHit})
+      socket.emit("resultOfHit", { wasHit });
+      if (wasHit) {
+        nyFleet[0][co1 - 1][co2 - 1].hitShip = true;
+      }
+      if (!wasHit) {
+        nyFleet[0][co2 - 1][co1 - 1].hit = "splash";
+        console.log("POSITION!!!!!!!!!!!", nyFleet[0][co1 - 1][co2 - 1]);
+      }
       setShips(newShips);
     });
 
@@ -102,8 +121,8 @@ const Gameboard = (props) => {
               >
                 <button
                   className={`${shipObject.ship !== null ? "active" : ""} ${
-                    shipObject.hit === true ? "hit" : ""
-                  }`}
+                    shipObject.hit === "splash" ? "water" : ""
+                  } ${shipObject.hit === true ? "hit" : ""}`}
                   value={shipObject}
                   onClick={(e) =>
                     console.log(
