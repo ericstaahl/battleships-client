@@ -1,65 +1,61 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column; 
-  }
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 .gameboard {
+  display: flex;
+  justify-content: center;
+}
+.rad {
+  display: inline;
+  .square {
+    width: 4em;
+    height: 2em;
     display: flex;
     justify-content: center;
- 
-}
-  .rad {
-    display: inline;
-    .square {
-        width: 4em;
-        height: 2em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    align-items: center;
   }
- 
-
+}
 
 button {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    border: none;
-    border: 1px solid rgb(192, 192, 192);
-    opacity: 0.7;
-    background-color: rgb(255, 255, 255);
-  }
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  border: none;
+  border: 1px solid rgb(192, 192, 192);
+  opacity: 0.7;
+  background-color: rgb(255, 255, 255);
+}
 
-  button:hover {
-    opacity: 1;
+button:hover {
+  opacity: 1;
+}
+
+.water {
+  background-color: yellow;
 }
 
 .alert {
-    width: 90%;
-    text-align: center;
-  }
+  width: 90%;
+  text-align: center;
+}
 
-  .opponent {
-    margin-top: 7.9%;
-  }
-
-
+.opponent {
+  margin-top: 7.9%;
+}
 
 .active {
-    background-color: chartreuse;
-  }
-  
-.miss {
-    background-color: red;
-  }
-  
-.hit {
-    border: 4px solid red;
-  }
-  
+  background-color: chartreuse;
+}
 
-  
+.miss {
+  background-color: red;
+}
+
+.hit {
+  border: 4px solid red;
+}
