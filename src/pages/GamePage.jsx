@@ -21,8 +21,11 @@ export default function GamePage() {
 
   // Tell the server that the user wants to join a game
   const joinGame = () => {
+    
     setGameFound(false);
     setWaitingForGame(true);
+    setLose(false)
+    setWin(false)
     socket.emit("joinGame");
   };
 
@@ -135,8 +138,8 @@ export default function GamePage() {
       </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
-      {/* {win && <WinMessage />}
-      {lose && <LoosingMessage />} */}
+      {win && <WinMessage />}
+      {lose && <LoosingMessage />}
       {gameInProgress && (
         <div className="gameUI">
           {/* First gameboard */}
