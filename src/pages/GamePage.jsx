@@ -18,14 +18,15 @@ export default function GamePage() {
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
   const [gameInProgress, setGameInProgress] = useState(false)
+  const [opponentShipsLeft, setOpponentShipsLeft] = useState(4)
 
   // Tell the server that the user wants to join a game
   const joinGame = () => {
-    
     setGameFound(false);
     setWaitingForGame(true);
     setLose(false)
     setWin(false)
+    setOpponentShipsLeft(4)
     socket.emit("joinGame");
   };
 
@@ -87,9 +88,9 @@ export default function GamePage() {
 
   const [lose, setLose] = useState(false)
 
-  const handleSetLose= () => {
+  const handleSetLose = () => {
     setLose(true)
-    
+
   }
 
   function changeFlag(boolean, string, message) {
@@ -99,6 +100,7 @@ export default function GamePage() {
   }
 
   useEffect(() => {
+    console.log("GamePage sockets initializing")
     socket.on("playerTurn", (id) => {
       if (socket.id === id) {
         setFlag(false);
@@ -126,39 +128,51 @@ export default function GamePage() {
       console.log("The match is over")
       setGameInProgress(false)
     })
+    socket.on("shipsLeft", (data) => {
+      console.log("resultOfHit in GamePage (opponent gameboard)")
+      console.log(data)
+      if(data) {
+        setOpponentShipsLeft(data.shipsLeft)
+      }
+    });
   }, []);
 
   return (
     <>
       <Header />
       <div className="text-center">
-      <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
-        Join game
-      </Button>
+        <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
+          Join game
+        </Button>
       </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
       {win && <WinMessage />}
       {lose && <LoosingMessage />}
       {gameInProgress && (
-        <div className="gameUI">
-          {/* First gameboard */}
-          <div className="turn">
-            <Alert key={alert} variant={alert}>
-              {message}
-            </Alert>
-            <Gameboard handleSetLose={handleSetLose} rows={row} columns={column} refs={ref} flagga={flag} />
+        <>
+          <div>
+            <p>Ships left for the opponent: {opponentShipsLeft}</p>
           </div>
+          <div className="gameUI">
+            {/* First gameboard */}
+            <div className="turn">
+              <Alert key={alert} variant={alert}>
+                {message}
+              </Alert>
+              <Gameboard handleSetLose={handleSetLose} rows={row} columns={column} refs={ref} flagga={flag} />
+            </div>
 
-          {/* Second gameboard */}
-          <OpponentGameBoard
-            rows={row}
-            columns={column}
-            refs={ref}
-            flagga={flag}
-            changeflagga={changeFlag}
-          />
-        </div>
+            {/* Second gameboard */}
+            <OpponentGameBoard
+              rows={row}
+              columns={column}
+              refs={ref}
+              flagga={flag}
+              changeflagga={changeFlag}
+            />
+          </div>
+        </>
       )}
       <Waves />
     </>

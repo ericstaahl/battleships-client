@@ -75,7 +75,8 @@ const Gameboard = (props) => {
         socket.emit("gameOver");
         props.handleSetLose();
       }
-      socket.emit("resultOfHit", { wasHit });
+      console.log("Running result of hit on line below")
+      socket.emit("resultOfHit", { wasHit, shipsLeft: (ships.length - sunkShips.length) });
       if (wasHit) {
         nyFleet[0][co1 - 1][co2 - 1].hitShip = true;
       }
