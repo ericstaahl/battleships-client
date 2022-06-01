@@ -12,17 +12,37 @@ const generateBoard = () => {
     initialBattleBoard.push([]);
     // add 10 individual objects to the row
     for (let index = 0; index < 10; index++) {
-      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false });
+      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false, coords: [index + 1, rowIndex + 1] });
     }
   }
 };
 // run the function
 generateBoard();
 
+let lastHitPosition = null
+
 const Gameboard = (props) => {
   const socket = useSocketContext();
   // Initial state is equal to initialBattleBoard.
   const [fleet, setFleet] = useState([initialBattleBoard]);
+
+  useEffect(() => {
+    socket.on("resultOfHit", (data) => {
+      const newFleet = [...fleet]
+      console.log(data)
+      console.log(lastHitPosition)
+      if (data.wasHit) {
+        newFleet[0][lastHitPosition[1] - 1][lastHitPosition[0] - 1].hitShip = true
+      }
+      if (!data.wasHit) {
+        newFleet[0][lastHitPosition[1] - 1][lastHitPosition[0] - 1].hitWater = true 
+      }
+      setFleet(newFleet)
+    });
+    return () => {
+      socket.off("resultOfHit");
+    };
+  }, [])
 
   // //Testing if it disables the one that got hit even though the rest are disabled
   //fleet[0][0][0].hitWater = true;
@@ -60,15 +80,15 @@ const Gameboard = (props) => {
                 disabled={
                   props.flagga || shipObject.hitShip || shipObject.hitWater
                 }
-                className={`${shipObject.hitShip === true ? "active" : ""} ${
-                  shipObject.hitWater === true ? "miss" : ""
-                }`}
+                className={`${shipObject.hitShip === true ? "active" : ""} ${shipObject.hitWater === true ? "miss" : ""
+                  }`}
                 value={shipObject}
                 onClick={(e) => {
                   console.log(
                     shipObject,
-                    e.target.parentElement.getAttribute("data-coords")
+                    e.target.parentElement.getAttribute("data-coords"),
                   );
+                  lastHitPosition = shipObject.coords
                   socket.emit(
                     "coordinates",
                     e.target.parentElement.getAttribute("data-coords")

@@ -34,6 +34,8 @@ const Gameboard = (props) => {
       console.log(typeof coordinates);
       console.log("Coords from server:", coordinates);
       const newShips = [...ships];
+      let wasHit = false;
+      let coordsHit = null
 
       newShips.forEach((ship) => {
         ship.boxes.forEach((box) => {
@@ -41,6 +43,9 @@ const Gameboard = (props) => {
             console.log("If is running");
             console.log(box);
             box.hit = true;
+            
+            wasHit = true
+            coordsHit = box.coords
           }
         });
         // Check if ship has sunk
@@ -51,14 +56,15 @@ const Gameboard = (props) => {
           ship.sunk = true;
         }
       });
-
+      
       const sunkShips = newShips.filter((ship) => ship.sunk === true);
       if (sunkShips.length === 4) {
         socket.emit("gameOver");
       }
-
+      socket.emit('resultOfHit', {wasHit, coordsHit})
       setShips(newShips);
     });
+
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
     return () => {
