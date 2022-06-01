@@ -135,8 +135,8 @@ export default function GamePage() {
       </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
-      {win && <WinMessage />}
-      {lose && <LoosingMessage />}
+      {/* {win && <WinMessage />}
+      {lose && <LoosingMessage />} */}
       {gameInProgress && (
         <div className="gameUI">
           {/* First gameboard */}
