@@ -30,91 +30,91 @@ const useGeneratefleet = (ships) => {
   //Function to get a random number
   function getRandomInt(min, max) {
     // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
   function buildShip(shipObject, shipsObjectIndex) {
     //Randomize a position
-    let position = getRandomInt(0, 1);
-    let generate = true;
-    let busy = false;
+    let position = getRandomInt(0, 1)
+    let generate = true
+    let busy = false
 
     //As long as generate is true it will continue to create a new ship
     while (generate === true) {
       //Horizontal placement
       if (position === 0) {
-        busy = false;
-        let length = getRandomInt(0, 9);
+        busy = false
+        let length = getRandomInt(0, 9)
         //Make sure the ship won't be placed outside the board
-        let row = getRandomInt(0, 10 - shipObject.size);
+        let row = getRandomInt(0, 10 - shipObject.size)
         //Making sure it begins on the chosen position
-        row = row - 1;
+        row = row - 1
 
         //Check every position/coordinate if it's busy
         for (let index = 0; index < shipObject.size; index++) {
-          row++;
+          row++
           if (fleet[row][length].ship !== null) {
-            console.log("OH NO... Busy");
-            busy = true;
+            console.log("OH NO... Busy")
+            busy = true
           }
         }
 
         //If all the spaces are empty, add our ship object to the board
         if (busy === false) {
-          console.log("PASSED CHECK", shipObject.size);
-          row = row - shipObject.size;
+          console.log("PASSED CHECK", shipObject.size)
+          row = row - shipObject.size
           for (let index = 0; index < shipObject.size; index++) {
-            row++;
-            fleet[row][length].ship = shipObject;
+            row++
+            fleet[row][length].ship = shipObject
             // Create a circular reference between the current "box" and the ships object
             console.log("Index in the ships object:", shipsObjectIndex)
             fleet[row][length].ship.boxes.push(fleet[row][length])
           }
-          generate = false;
+          generate = false
         }
       } else {
         //Vertical placement
-        busy = false;
-        let length = getRandomInt(0, 10 - shipObject.size);
-        let row = getRandomInt(0, 9);
-        console.log("length:", length, "row: ", row);
-        length = length - 1;
+        busy = false
+        let length = getRandomInt(0, 10 - shipObject.size)
+        let row = getRandomInt(0, 9)
+        console.log("length:", length, "row: ", row)
+        length = length - 1
         for (let index = 0; index < shipObject.size; index++) {
           length++;
           if (fleet[row][length].ship !== null) {
-            console.log("OH NO... Busy");
-            busy = true;
+            console.log("OH NO... Busy")
+            busy = true
           }
         }
-        console.log("BUSY", busy);
+        console.log("BUSY", busy)
         if (busy === false) {
-          console.log("PASSED CHECK", shipObject.size);
-          length = length - shipObject.size;
+          console.log("PASSED CHECK", shipObject.size)
+          length = length - shipObject.size
           for (let index = 0; index < shipObject.size; index++) {
-            length++;
-            fleet[row][length].ship = shipObject;
-            console.log("FROM IF STATEMENT");
+            length++
+            fleet[row][length].ship = shipObject
+            console.log("FROM IF STATEMENT")
 
             // Create a circular reference between the current "box" and the ships object
             fleet[row][length].ship.boxes[index] = fleet[row][length]
 
           }
-          generate = false;
+          generate = false
         }
       }
 
-      console.log(busy);
+      console.log(busy)
     }
   }
 
   // Use the copy of the ships object instead
-  buildShip(newShips[0], 0);
-  buildShip(newShips[1], 1);
-  buildShip(newShips[2], 2);
-  buildShip(newShips[3], 3);
+  buildShip(newShips[0], 0)
+  buildShip(newShips[1], 1)
+  buildShip(newShips[2], 2)
+  buildShip(newShips[3], 3)
 
   // Return both the new fleet and the new ships object
-  return { newFleet: [fleet], newShips: newShips };
+  return { newFleet: [fleet], newShips: newShips }
 };
 
-export default useGeneratefleet;
+export default useGeneratefleet

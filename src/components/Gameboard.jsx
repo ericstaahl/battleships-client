@@ -1,98 +1,108 @@
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import generateFleet from "../helpers/generateFleet";
-import { useEffect, useState } from "react";
-import { useSocketContext } from "../contexts/SocketContext";
-import LoosingMessage from "./LoosingMessage";
+import Container from "react-bootstrap/Container"
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
+import generateFleet from "../helpers/generateFleet"
+import { useEffect, useState } from "react"
+import { useSocketContext } from "../contexts/SocketContext"
+
 
 const Gameboard = (props) => {
-  const socket = useSocketContext();
+  const socket = useSocketContext()
 
   const [ships, setShips] = useState([
     { size: 4, sunk: false, boxes: [] },
     { size: 3, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
-  ]);
+  ])
 
-  const [fleet, setFleet] = useState(null);
-  let nyFleet = null;
+
+  const [fleet, setFleet] = useState(null)
+  let nyFleet = null
   function callFleet(fleet) {
-    console.log("THIS IS THE FLEET OMG", fleet);
-    nyFleet = [...fleet];
+    console.log("THIS IS THE FLEET OMG", fleet)
+    nyFleet = [...fleet]
   }
+
 
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-    const { newFleet, newShips } = generateFleet(ships);
-    setShips(newShips);
-    setFleet(newFleet, callFleet(newFleet));
+
+    const { newFleet, newShips } = generateFleet(ships)
+    setShips(newShips)
+    setFleet(newFleet, callFleet(newFleet))
+
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
-  }, []);
+  }, [])
 
   useEffect(() => {
     socket.on("coordinatesFromServer", (coordinates) => {
-      console.log(typeof coordinates);
-      console.log("Coords from server:", coordinates);
-      const newShips = [...ships];
+
+      console.log(typeof coordinates)
+      console.log("Coords from server:", coordinates)
+      const newShips = [...ships]
       //const newFleet = [...fleet];
-      let wasHit = false;
+      let wasHit = false
       //let coordsHit = null
 
-      const newCo = coordinates.split(",");
-      const co1 = parseInt(newCo[0]);
-      const co2 = parseInt(newCo[1]);
+      const newCo = coordinates.split(",")
+      const co1 = parseInt(newCo[0])
+      const co2 = parseInt(newCo[1])
 
       console.log(co1, co2);
 
-      console.log("FLEEEEEEEEEEEEEEET", nyFleet);
+      console.log("FLEEEEEEEEEEEEEEET", nyFleet)
+
 
       newShips.forEach((ship) => {
         ship.boxes.forEach((box) => {
           if (box.coords.toString() === coordinates) {
-            console.log("If is running");
-            console.log(box);
-            box.hit = true;
 
-            wasHit = true;
+            console.log("If is running")
+            console.log(box)
+            box.hit = true
+
+            wasHit = true
             //coordsHit = box.coords
+ 
           }
         });
         // Check if ship has sunk
-        const shipPartsHit = ship.boxes.filter((box) => box.hit === true);
-        console.log("Ship parts hit");
-        console.log(shipPartsHit);
+        const shipPartsHit = ship.boxes.filter((box) => box.hit === true)
+        console.log("Ship parts hit")
+        console.log(shipPartsHit)
         if (shipPartsHit.length === ship.boxes.length) {
-          ship.sunk = true;
+          ship.sunk = true
         }
       });
 
-      const sunkShips = newShips.filter((ship) => ship.sunk === true);
+      const sunkShips = newShips.filter((ship) => ship.sunk === true)
       if (sunkShips.length === 4) {
-        socket.emit("gameOver");
-        props.handleSetLose();
+
+        socket.emit("gameOver")
+        props.handleSetLose()
       }
       console.log("Running result of hit on line below")
       socket.emit("resultOfHit", { wasHit, shipsLeft: (ships.length - sunkShips.length) });
       if (wasHit) {
-        nyFleet[0][co1 - 1][co2 - 1].hitShip = true;
+        nyFleet[0][co1 - 1][co2 - 1].hitShip = true
       }
       if (!wasHit) {
-        nyFleet[0][co2 - 1][co1 - 1].hit = "splash";
-        console.log("POSITION!!!!!!!!!!!", nyFleet[0][co1 - 1][co2 - 1]);
+        nyFleet[0][co2 - 1][co1 - 1].hit = "splash"
+        console.log("POSITION!!!!!!!!!!!", nyFleet[0][co1 - 1][co2 - 1])
       }
-      setShips(newShips);
+      setShips(newShips)
+
     });
 
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
     return () => {
-      socket.off("coordinatesFromServer");
-    };
-  }, []);
+      socket.off("coordinatesFromServer")
+    }
+  }, [])
 
   if (fleet === null) {
     return <p>Loading...</p>;
@@ -140,7 +150,7 @@ const Gameboard = (props) => {
         ))}
       </Container>
     </div>
-  );
-};
+  )
+}
 
 export default Gameboard;

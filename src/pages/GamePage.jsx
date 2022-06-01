@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSocketContext } from "../contexts/SocketContext";
-import "../App.css";
 import Gameboard from "../components/Gameboard";
 import Waves from "../components/Waves";
 import Header from "../components/Header";
@@ -10,10 +9,10 @@ import OpponentGameBoard from "../components/OpponentGameboard";
 import Alert from "react-bootstrap/Alert";
 import LoosingMessage from "../components/LoosingMessage";
 
-
 export default function GamePage() {
   // get socket from the socket context.
   const socket = useSocketContext();
+
   // States to control wether a button can be pressed and to display messages.
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
@@ -43,7 +42,7 @@ export default function GamePage() {
     socket.on("gameFound", () => {
       setWaitingForGame(false);
       setGameFound(true);
-      setGameInProgress(true)
+      setGameInProgress(true);
       setGameFound(false);
     });
 
@@ -82,16 +81,14 @@ export default function GamePage() {
 
   const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
 
-  const [flag, setFlag] = useState()
+  const [flag, setFlag] = useState();
 
-  const [win, setWin] = useState(false)
-
-  const [lose, setLose] = useState(false)
+  const [win, setWin] = useState(false);
+  const [lose, setLose] = useState(false);
 
   const handleSetLose = () => {
-    setLose(true)
-
-  }
+    setLose(true);
+  };
 
   function changeFlag(boolean, string, message) {
     setFlag(boolean);
@@ -114,6 +111,7 @@ export default function GamePage() {
         setAlert("danger");
       }
     });
+
     socket.on("changeTurn", (msg) => {
       console.log(msg);
       setFlag(false);
@@ -140,15 +138,28 @@ export default function GamePage() {
   return (
     <>
       <Header />
+
       <div className="text-center">
-        <Button className="w-auto" size="lg" disabled={waitingForGame} onClick={joinGame}>
+        <Button
+          className={`w-auto joinGameButton ${
+            gameInProgress === true ? "d-none" : ""
+          }`}
+          size="lg"
+          disabled={waitingForGame}
+          onClick={joinGame}
+        >
           Join game
         </Button>
       </div>
+
       {waitingForGame && <p>Waiting for a game...</p>}
+
       {gameFound && <p>A game was found!</p>}
+
       {win && <WinMessage />}
+
       {lose && <LoosingMessage />}
+
       {gameInProgress && (
         <>
           <div>
@@ -174,6 +185,7 @@ export default function GamePage() {
           </div>
         </>
       )}
+
       <Waves />
     </>
   );
