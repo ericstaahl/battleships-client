@@ -1,28 +1,28 @@
-import { useSocketContext } from "../contexts/SocketContext";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { useEffect, useState } from "react";
+import { useSocketContext } from "../contexts/SocketContext"
+import Container from "react-bootstrap/Container"
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
+import { useEffect, useState } from "react"
 
-let initialBattleBoard = [];
+let initialBattleBoard = []
 // A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
 const generateBoard = () => {
   // Create the rows
   for (let rowIndex = 0; rowIndex < 10; rowIndex++) {
-    initialBattleBoard.push([]);
+    initialBattleBoard.push([])
     // add 10 individual objects to the row
     for (let index = 0; index < 10; index++) {
-      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false });
+      initialBattleBoard[rowIndex].push({ hitShip: false, hitWater: false })
     }
   }
-};
+}
 // run the function
-generateBoard();
+generateBoard()
 
 const Gameboard = (props) => {
-  const socket = useSocketContext();
+  const socket = useSocketContext()
   // Initial state is equal to initialBattleBoard.
-  const [fleet, setFleet] = useState([initialBattleBoard]);
+  const [fleet, setFleet] = useState([initialBattleBoard])
 
   // //Testing if it disables the one that got hit even though the rest are disabled
   //fleet[0][0][0].hitWater = true;
@@ -68,18 +68,18 @@ const Gameboard = (props) => {
                   console.log(
                     shipObject,
                     e.target.parentElement.getAttribute("data-coords")
-                  );
+                  )
                   socket.emit(
                     "coordinates",
                     e.target.parentElement.getAttribute("data-coords")
-                  );
-                  socket.emit("madeMyMove", "It's your turn");
+                  )
+                  socket.emit("madeMyMove", "It's your turn")
 
                   props.changeflagga(
                     true,
                     "danger",
                     "Aw it's the other players turn..."
-                  );
+                  )
                 }}
               >
                 {index + 1 + props.columns[fleetIndex]}
@@ -89,7 +89,7 @@ const Gameboard = (props) => {
         </Row>
       ))}
     </Container>
-  );
-};
+  )
+}
 
 export default Gameboard;
