@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import generateFleet from "../helpers/generateFleet";
 import { useEffect, useState } from "react";
 import { useSocketContext } from "../contexts/SocketContext";
+import LoosingMessage from "./LoosingMessage";
 
 
 
@@ -60,6 +61,7 @@ const Gameboard = (props) => {
       const sunkShips = newShips.filter((ship) => ship.sunk === true);
       if (sunkShips.length === 4) {
         socket.emit("gameOver");
+        props.handleSetLose()
       }
       socket.emit('resultOfHit', {wasHit, coordsHit})
       setShips(newShips);

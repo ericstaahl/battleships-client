@@ -18,7 +18,6 @@ const StartPage = () => {
               variant="info"
               as={Link}
               to="/gameboard"
-              onClick=""
             >
               Go to lobby
             </Button>

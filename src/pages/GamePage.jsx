@@ -4,9 +4,11 @@ import "../App.css";
 import Gameboard from "../components/Gameboard";
 import Waves from "../components/Waves";
 import Header from "../components/Header";
+import WinMessage from "../components/WinMessage";
 import { Button } from "react-bootstrap";
 import OpponentGameBoard from "../components/OpponentGameboard";
 import Alert from "react-bootstrap/Alert";
+import LoosingMessage from "../components/LoosingMessage";
 
 
 export default function GamePage() {
@@ -76,7 +78,16 @@ export default function GamePage() {
 
   const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
 
-  const [flag, setFlag] = useState();
+  const [flag, setFlag] = useState()
+
+  const [win, setWin] = useState(false)
+
+  const [lose, setLose] = useState(false)
+
+  const handleSetLose= () => {
+    setLose(true)
+    
+  }
 
   function changeFlag(boolean, string, message) {
     setFlag(boolean);
@@ -106,6 +117,7 @@ export default function GamePage() {
     });
     socket.on('win', () => {
       console.log("Congratulations, you won!")
+      setWin(true)
     })
     socket.on('matchIsOver', () => {
       console.log("The match is over")
@@ -123,6 +135,8 @@ export default function GamePage() {
       </div>
       {waitingForGame && <p>Waiting for a game...</p>}
       {gameFound && <p>A game was found!</p>}
+      {win && <WinMessage />}
+      {lose && <LoosingMessage />}
       {gameInProgress && (
         <div className="gameUI">
           {/* First gameboard */}
@@ -130,7 +144,7 @@ export default function GamePage() {
             <Alert key={alert} variant={alert}>
               {message}
             </Alert>
-            <Gameboard rows={row} columns={column} refs={ref} flagga={flag} />
+            <Gameboard handleSetLose={handleSetLose} rows={row} columns={column} refs={ref} flagga={flag} />
           </div>
 
           {/* Second gameboard */}
