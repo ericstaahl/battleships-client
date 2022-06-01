@@ -1,72 +1,72 @@
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import generateFleet from "../helpers/generateFleet";
-import { useEffect, useState } from "react";
-import { useSocketContext } from "../contexts/SocketContext";
+import Container from "react-bootstrap/Container"
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
+import generateFleet from "../helpers/generateFleet"
+import { useEffect, useState } from "react"
+import { useSocketContext } from "../contexts/SocketContext"
 
 
 
 
 const Gameboard = (props) => {
-  const socket = useSocketContext();
+  const socket = useSocketContext()
 
   const [ships, setShips] = useState([
     { size: 4, sunk: false, boxes: [] },
     { size: 3, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
     { size: 2, sunk: false, boxes: [] },
-  ]);
+  ])
 
-  const [fleet, setFleet] = useState(null);
+  const [fleet, setFleet] = useState(null)
 
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-    const { newFleet, newShips } = generateFleet(ships);
-    setShips(newShips);
-    setFleet(newFleet);
+    const { newFleet, newShips } = generateFleet(ships)
+    setShips(newShips)
+    setFleet(newFleet)
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
-  }, []);
+  }, [])
 
   useEffect(() => {
     socket.on("coordinatesFromServer", (coordinates) => {
-      console.log(typeof coordinates);
-      console.log("Coords from server:", coordinates);
-      const newShips = [...ships];
+      console.log(typeof coordinates)
+      console.log("Coords from server:", coordinates)
+      const newShips = [...ships]
 
       newShips.forEach((ship) => {
         ship.boxes.forEach((box) => {
           if (box.coords.toString() === coordinates) {
-            console.log("If is running");
-            console.log(box);
-            box.hit = true;
+            console.log("If is running")
+            console.log(box)
+            box.hit = true
           }
         });
         // Check if ship has sunk
-        const shipPartsHit = ship.boxes.filter((box) => box.hit === true);
-        console.log("Ship parts hit");
-        console.log(shipPartsHit);
+        const shipPartsHit = ship.boxes.filter((box) => box.hit === true)
+        console.log("Ship parts hit")
+        console.log(shipPartsHit)
         if (shipPartsHit.length === ship.boxes.length) {
-          ship.sunk = true;
+          ship.sunk = true
         }
       });
 
-      const sunkShips = newShips.filter((ship) => ship.sunk === true);
+      const sunkShips = newShips.filter((ship) => ship.sunk === true)
       if (sunkShips.length === 4) {
-        socket.emit("gameOver");
+        socket.emit("gameOver")
         props.handleSetLose()
       }
 
-      setShips(newShips);
+      setShips(newShips)
     });
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
     return () => {
-      socket.off("coordinatesFromServer");
-    };
-  }, []);
+      socket.off("coordinatesFromServer")
+    }
+  }, [])
 
   if (fleet === null) {
     return <p>Loading...</p>;
@@ -114,7 +114,7 @@ const Gameboard = (props) => {
         ))}
       </Container>
     </div>
-  );
-};
+  )
+}
 
 export default Gameboard;
