@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { useSocketContext } from "../contexts/SocketContext"
-import "../App.css"
 import Gameboard from "../components/Gameboard"
 import Waves from "../components/Waves"
 import Header from "../components/Header"
