@@ -49,7 +49,13 @@ export default function GamePage() {
     socket.on("userLeft", (message) => {
       console.log(message);
     });
-  }, []);
+    return () => {
+      socket.off("connected")
+      socket.off("HiRoom") 
+      socket.off("gameFound")
+      socket.off("userLeft")
+    } 
+  }, [socket]);
 
   const [row, setRows] = useState([
     "1",
