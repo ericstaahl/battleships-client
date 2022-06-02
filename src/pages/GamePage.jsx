@@ -48,6 +48,8 @@ export default function GamePage() {
 
     socket.on("userLeft", (message) => {
       console.log(message);
+      setGameInProgress(false)
+      setWin(true)
     });
     return () => {
       socket.off("connected");
