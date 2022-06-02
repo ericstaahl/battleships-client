@@ -48,6 +48,8 @@ export default function GamePage() {
 
     socket.on("userLeft", (message) => {
       console.log(message);
+      setGameInProgress(false)
+      setWin(true)
     });
     return () => {
       socket.off("connected");
@@ -60,6 +62,7 @@ export default function GamePage() {
   const row = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
   const column = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
+  // UseState for whos turn it is and adding alert to it
   const [alert, setAlert] = useState("success");
   const [message, setMessage] = useState("Yay It's your turn!");
 
@@ -67,19 +70,22 @@ export default function GamePage() {
 
   const [flag, setFlag] = useState();
 
+  // useSate for adding lose and win message at the end of game
   const [win, setWin] = useState(false);
   const [lose, setLose] = useState(false);
 
+  // adding function for loosnig to send to other component
   const handleSetLose = () => {
     setLose(true);
   };
-
+  // Function that will change the color and text of the alert message
   function changeFlag(boolean, string, message) {
     setFlag(boolean);
     setAlert(string);
     setMessage(message);
   }
 
+  // useEffect for randomizing who takes the first turn in the game
   useEffect(() => {
     console.log("GamePage sockets initializing");
     socket.on("playerTurn", (id) => {
@@ -95,7 +101,7 @@ export default function GamePage() {
         setAlert("danger");
       }
     });
-
+      // Listens for the different messages and dose what comes
     socket.on("changeTurn", (msg) => {
       console.log(msg);
       setFlag(false);
@@ -156,6 +162,7 @@ export default function GamePage() {
           <div>
             <p>Ships left for the opponent: {opponentShipsLeft}</p>
           </div>
+
           <div className="gameUI">
             {/* First gameboard */}
             <div className="turn">
@@ -180,10 +187,12 @@ export default function GamePage() {
               changeflagga={changeFlag}
             />
           </div>
+
         </>
       )}
 
       <Waves />
+      
     </>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import {Alert, Button} from 'react-bootstrap'
 import { Link } from "react-router-dom"
 
+// The alert that will be sent when you lose the game
 export default function LoosingMessage() {
   return (
     <Alert variant="warning">
@@ -15,7 +16,7 @@ export default function LoosingMessage() {
         variant="info"
         as={Link}
         to="/">
-            Play Again?
+           Start page
         </Button>
 
     </Alert>
