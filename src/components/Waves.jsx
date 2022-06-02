@@ -1,5 +1,5 @@
 import React from 'react'
-
+// component that creates the waves at the bottom
 
 function Waves() {
   return (
