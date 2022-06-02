@@ -16,16 +16,16 @@ export default function GamePage() {
   // States to control wether a button can be pressed and to display messages.
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
-  const [gameInProgress, setGameInProgress] = useState(false)
-  const [opponentShipsLeft, setOpponentShipsLeft] = useState(4)
+  const [gameInProgress, setGameInProgress] = useState(false);
+  const [opponentShipsLeft, setOpponentShipsLeft] = useState(4);
 
   // Tell the server that the user wants to join a game
   const joinGame = () => {
     setGameFound(false);
     setWaitingForGame(true);
-    setLose(false)
-    setWin(false)
-    setOpponentShipsLeft(4)
+    setLose(false);
+    setWin(false);
+    setOpponentShipsLeft(4);
     socket.emit("joinGame");
   };
 
@@ -50,37 +50,15 @@ export default function GamePage() {
       console.log(message);
     });
     return () => {
-      socket.off("connected")
-      socket.off("HiRoom") 
-      socket.off("gameFound")
-      socket.off("userLeft")
-    } 
+      socket.off("connected");
+      socket.off("HiRoom");
+      socket.off("gameFound");
+      socket.off("userLeft");
+    };
   }, [socket]);
 
-  const [row, setRows] = useState([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-  ]);
-  const [column, setColumns] = useState([
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-  ]);
+  const row = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+  const column = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
   const [alert, setAlert] = useState("success");
   const [message, setMessage] = useState("Yay It's your turn!");
@@ -103,7 +81,7 @@ export default function GamePage() {
   }
 
   useEffect(() => {
-    console.log("GamePage sockets initializing")
+    console.log("GamePage sockets initializing");
     socket.on("playerTurn", (id) => {
       if (socket.id === id) {
         setFlag(false);
@@ -124,28 +102,28 @@ export default function GamePage() {
       setAlert("success");
       setMessage("Yay It's your turn!");
     });
-    socket.on('win', () => {
-      console.log("Congratulations, you won!")
-      setWin(true)
-    })
-    socket.on('matchIsOver', () => {
-      console.log("The match is over")
-      setGameInProgress(false)
-    })
+    socket.on("win", () => {
+      console.log("Congratulations, you won!");
+      setWin(true);
+    });
+    socket.on("matchIsOver", () => {
+      console.log("The match is over");
+      setGameInProgress(false);
+    });
     socket.on("shipsLeft", (data) => {
-      console.log("resultOfHit in GamePage (opponent gameboard)")
-      console.log(data)
-      if(data) {
-        setOpponentShipsLeft(data.shipsLeft)
+      console.log("resultOfHit in GamePage (opponent gameboard)");
+      console.log(data);
+      if (data) {
+        setOpponentShipsLeft(data.shipsLeft);
       }
     });
     return () => {
-      socket.off("playerTurn")
-      socket.off("changeTurn") 
-      socket.off("win")
-      socket.off("matchIsOver")
-      socket.off("shipsLeft")
-    }
+      socket.off("playerTurn");
+      socket.off("changeTurn");
+      socket.off("win");
+      socket.off("matchIsOver");
+      socket.off("shipsLeft");
+    };
   }, [flag, socket]);
 
   return (
@@ -184,7 +162,13 @@ export default function GamePage() {
               <Alert key={alert} variant={alert}>
                 {message}
               </Alert>
-              <Gameboard handleSetLose={handleSetLose} rows={row} columns={column} refs={ref} flagga={flag} />
+              <Gameboard
+                handleSetLose={handleSetLose}
+                rows={row}
+                columns={column}
+                refs={ref}
+                flagga={flag}
+              />
             </div>
 
             {/* Second gameboard */}
