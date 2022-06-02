@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import generateFleet from "../helpers/generateFleet"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocketContext } from "../contexts/SocketContext"
 
 
@@ -18,12 +18,14 @@ const Gameboard = (props) => {
 
 
   const [fleet, setFleet] = useState(null)
-  let nyFleet = null
+  // let nyFleet = null
+  const nyFleet = useRef(null)
   const callFleet = useCallback(
     (fleet) => {
       console.log("THIS IS THE FLEET OMG", fleet)
-      nyFleet = [...fleet]
-    }, [fleet])
+      // nyFleet = [...fleet]
+      nyFleet.current = [...fleet]
+    }, [])
 
 
   // Import the fleet and map it out
@@ -55,7 +57,7 @@ const Gameboard = (props) => {
 
       console.log(co1, co2);
 
-      console.log("FLEEEEEEEEEEEEEEET", nyFleet)
+      console.log("FLEEEEEEEEEEEEEEET", nyFleet.current)
 
 
       newShips.forEach((ship) => {
@@ -89,11 +91,11 @@ const Gameboard = (props) => {
       console.log("Running result of hit on line below")
       socket.emit("resultOfHit", { wasHit, shipsLeft: (ships.length - sunkShips.length) });
       if (wasHit) {
-        nyFleet[0][co1 - 1][co2 - 1].hitShip = true
+        nyFleet.current[0][co1 - 1][co2 - 1].hitShip = true
       }
       if (!wasHit) {
-        nyFleet[0][co2 - 1][co1 - 1].hit = "splash"
-        console.log("POSITION!!!!!!!!!!!", nyFleet[0][co1 - 1][co2 - 1])
+        nyFleet.current[0][co2 - 1][co1 - 1].hit = "splash"
+        console.log("POSITION!!!!!!!!!!!", nyFleet.current[0][co1 - 1][co2 - 1])
       }
       setShips(newShips)
 
@@ -104,7 +106,7 @@ const Gameboard = (props) => {
     return () => {
       socket.off("coordinatesFromServer")
     }
-  }, [])
+  }, [props, ships, socket])
 
   if (fleet === null) {
     return <p>Loading...</p>;

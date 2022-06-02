@@ -133,7 +133,14 @@ export default function GamePage() {
         setOpponentShipsLeft(data.shipsLeft)
       }
     });
-  }, []);
+    return () => {
+      socket.off("playerTurn")
+      socket.off("changeTurn") 
+      socket.off("win")
+      socket.off("matchIsOver")
+      socket.off("shipsLeft")
+    }
+  }, [flag, socket]);
 
   return (
     <>
