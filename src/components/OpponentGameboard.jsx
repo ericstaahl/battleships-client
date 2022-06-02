@@ -5,12 +5,11 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useCallback, useEffect, useState } from "react";
 
-// A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
-// run the function
-
+// Used for saving the clicked coordinates while waiting for a response if you hit or not
 let lastHitPosition = null
 
 const Gameboard = (props) => {
+  // A funtion to generate the initial battleboard instead of having 100 indiviual objects listed in the file
   const generateBoard = useCallback(() => {
     let initialBattleBoard = [];
     console.log("Generate function is running")
@@ -26,10 +25,12 @@ const Gameboard = (props) => {
   }, [])
 
   const socket = useSocketContext()
-  // Initial state is equal to initialBattleBoard.
+  // Initial state is equal to initialBattleBoard (which is returned by generateBoard).
   const [fleet, setFleet] = useState([generateBoard()])
 
   useEffect(() => {
+    // Listens for the result of the users move and edits the "box" (or square)
+    // to display whether it hit a ship or not.
     socket.on("resultOfHit", (data) => {
       const newFleet = [...fleet]
       console.log(data)
@@ -42,21 +43,12 @@ const Gameboard = (props) => {
       }
       setFleet(newFleet)
     });
+    //Cleanup function to remove listener
     return () => {
       console.log("OpponentGameboard is unmounting")
       socket.off("resultOfHit")
     }
   }, [fleet, socket])
-
-
-  // //Testing if it disables the one that got hit even though the rest are disabled
-  //fleet[0][0][0].hitWater = true;
-  // useEffect(() => {
-  //   socket.on("coordinatesFromServer", (coordinates) => {
-  //     console.log(typeof coordinates);
-  //     console.log("Coords from server:", coordinates);
-  //   });
-  // }, [])
 
   return (
     <Container className="gameboard opponent">
@@ -80,8 +72,7 @@ const Gameboard = (props) => {
               key={index}
             >
               <button
-                // disabled={shipObject.hitShip === true || shipObject.hitWater === true}
-                // //disabled={shipObject.hitShip === true || shipObject.hitWater === true}
+              //Disable the button when any of these properties are truthy.
                 disabled={
                   props.flagga || shipObject.hitShip || shipObject.hitWater
                 }
@@ -91,15 +82,18 @@ const Gameboard = (props) => {
                 onClick={(e) => {
                   console.log(
                     shipObject,
-
                     e.target.parentElement.getAttribute("data-coords"),
-                  )
-                  lastHitPosition = shipObject.coords
-
-                  socket.emit(
-                    "coordinates",
+                    )
+                    // Save the coordinates of the clicked "box" so that it can be used for changing 
+                    // the color of it when the result has come back.
+                    lastHitPosition = shipObject.coords
+                    
+                    socket.emit(
+                      // Get the coordinates from the parent element's data attribute property
+                      "coordinates",
                     e.target.parentElement.getAttribute("data-coords")
                   )
+                  // Let the opponent know that it's their turn
                   socket.emit("madeMyMove", "It's your turn")
 
                   props.changeflagga(
