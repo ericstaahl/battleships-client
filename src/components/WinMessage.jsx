@@ -1,6 +1,6 @@
-import React from 'react'
-import {Alert, Button} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Alert, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 // Showing win alert when you win the game
 
 export default function WinMessage() {
@@ -15,10 +15,10 @@ export default function WinMessage() {
         id="play-again"
         variant="info"
         as={Link}
-        to="/">
-        Start Page
+        to="/"
+      >
+        Back to start
       </Button>
-
     </Alert>
-  )
+  );
 }
