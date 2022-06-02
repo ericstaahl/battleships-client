@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import GamePage from "./pages/GamePage";
 import StartPage from "./pages/StartPage";
 import { Routes, Route } from "react-router-dom";

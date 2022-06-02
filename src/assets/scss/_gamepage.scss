@@ -10,3 +10,9 @@
         align-items: center;
       }
   }
+
+  @media screen and (max-width: 950px) {
+      .gameUI {
+        flex-direction: column;
+      }
+  }
