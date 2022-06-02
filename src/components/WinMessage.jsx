@@ -1,6 +1,7 @@
 import React from 'react'
 import {Alert, Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+// Showing win alert when you win the game
 
 export default function WinMessage() {
   return (
@@ -15,7 +16,7 @@ export default function WinMessage() {
         variant="info"
         as={Link}
         to="/">
-        Play Again?
+        Start Page
       </Button>
 
     </Alert>

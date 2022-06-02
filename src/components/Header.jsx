@@ -1,5 +1,5 @@
 import React from 'react'
-
+// Header component with logo in it
 
 export default function headerComponent() {
 
