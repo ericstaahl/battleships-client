@@ -16,14 +16,16 @@ export default function GamePage() {
   // States to control wether a button can be pressed and to display messages.
   const [waitingForGame, setWaitingForGame] = useState(false);
   const [gameFound, setGameFound] = useState(false);
-  const [gameInProgress, setGameInProgress] = useState(false);
+  const [gameInProgress, setGameInProgress] = useState(false)
+  const [opponentShipsLeft, setOpponentShipsLeft] = useState(4)
 
   // Tell the server that the user wants to join a game
   const joinGame = () => {
     setGameFound(false);
     setWaitingForGame(true);
-    setLose(false);
-    setWin(false);
+    setLose(false)
+    setWin(false)
+    setOpponentShipsLeft(4)
     socket.emit("joinGame");
   };
 
@@ -47,7 +49,13 @@ export default function GamePage() {
     socket.on("userLeft", (message) => {
       console.log(message);
     });
-  }, []);
+    return () => {
+      socket.off("connected")
+      socket.off("HiRoom") 
+      socket.off("gameFound")
+      socket.off("userLeft")
+    } 
+  }, [socket]);
 
   const [row, setRows] = useState([
     "1",
@@ -95,6 +103,7 @@ export default function GamePage() {
   }
 
   useEffect(() => {
+    console.log("GamePage sockets initializing")
     socket.on("playerTurn", (id) => {
       if (socket.id === id) {
         setFlag(false);
@@ -115,16 +124,29 @@ export default function GamePage() {
       setAlert("success");
       setMessage("Yay It's your turn!");
     });
-
-    socket.on("win", () => {
-      console.log("Congratulations, you won!");
-      setWin(true);
+    socket.on('win', () => {
+      console.log("Congratulations, you won!")
+      setWin(true)
+    })
+    socket.on('matchIsOver', () => {
+      console.log("The match is over")
+      setGameInProgress(false)
+    })
+    socket.on("shipsLeft", (data) => {
+      console.log("resultOfHit in GamePage (opponent gameboard)")
+      console.log(data)
+      if(data) {
+        setOpponentShipsLeft(data.shipsLeft)
+      }
     });
-    socket.on("matchIsOver", () => {
-      console.log("The match is over");
-      setGameInProgress(false);
-    });
-  }, []);
+    return () => {
+      socket.off("playerTurn")
+      socket.off("changeTurn") 
+      socket.off("win")
+      socket.off("matchIsOver")
+      socket.off("shipsLeft")
+    }
+  }, [flag, socket]);
 
   return (
     <>
@@ -152,30 +174,29 @@ export default function GamePage() {
       {lose && <LoosingMessage />}
 
       {gameInProgress && (
-        <div className="gameUI">
-          {/* First gameboard */}
-          <div className="turn">
-            <Alert key={alert} variant={alert}>
-              {message}
-            </Alert>
-            <Gameboard
-              handleSetLose={handleSetLose}
+        <>
+          <div>
+            <p>Ships left for the opponent: {opponentShipsLeft}</p>
+          </div>
+          <div className="gameUI">
+            {/* First gameboard */}
+            <div className="turn">
+              <Alert key={alert} variant={alert}>
+                {message}
+              </Alert>
+              <Gameboard handleSetLose={handleSetLose} rows={row} columns={column} refs={ref} flagga={flag} />
+            </div>
+
+            {/* Second gameboard */}
+            <OpponentGameBoard
               rows={row}
               columns={column}
               refs={ref}
               flagga={flag}
+              changeflagga={changeFlag}
             />
           </div>
-
-          {/* Second gameboard */}
-          <OpponentGameBoard
-            rows={row}
-            columns={column}
-            refs={ref}
-            flagga={flag}
-            changeflagga={changeFlag}
-          />
-        </div>
+        </>
       )}
 
       <Waves />

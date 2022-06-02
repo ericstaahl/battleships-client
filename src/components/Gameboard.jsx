@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import generateFleet from "../helpers/generateFleet"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocketContext } from "../contexts/SocketContext"
 
 
@@ -18,24 +18,28 @@ const Gameboard = (props) => {
 
 
   const [fleet, setFleet] = useState(null)
-  let nyFleet = null
-  function callFleet(fleet) {
-    console.log("THIS IS THE FLEET OMG", fleet)
-    nyFleet = [...fleet]
-  }
+  // let nyFleet = null
+  const nyFleet = useRef(null)
+  const callFleet = useCallback(
+    (fleet) => {
+      console.log("THIS IS THE FLEET OMG", fleet)
+      // nyFleet = [...fleet]
+      nyFleet.current = [...fleet]
+    }, [])
 
 
   // Import the fleet and map it out
   // generateFleet runs only once since it is in an useEffect without a dependency array.
   useEffect(() => {
-
-    const { newFleet, newShips } = generateFleet(ships)
-    setShips(newShips)
-    setFleet(newFleet, callFleet(newFleet))
+    if (fleet === null) {
+      const { newFleet, newShips } = generateFleet(ships)
+      setShips(newShips)
+      setFleet(newFleet, callFleet(newFleet))
+    }
 
     // Cleanup function that runs when the component is unmounted.
     // Stops listening for "coordinatesFromServer".
-  }, [])
+  }, [callFleet, ships, fleet])
 
   useEffect(() => {
     socket.on("coordinatesFromServer", (coordinates) => {
@@ -53,7 +57,7 @@ const Gameboard = (props) => {
 
       console.log(co1, co2);
 
-      console.log("FLEEEEEEEEEEEEEEET", nyFleet)
+      console.log("FLEEEEEEEEEEEEEEET", nyFleet.current)
 
 
       newShips.forEach((ship) => {
@@ -66,7 +70,7 @@ const Gameboard = (props) => {
 
             wasHit = true
             //coordsHit = box.coords
- 
+
           }
         });
         // Check if ship has sunk
@@ -84,13 +88,14 @@ const Gameboard = (props) => {
         socket.emit("gameOver")
         props.handleSetLose()
       }
-      socket.emit("resultOfHit", { wasHit })
+      console.log("Running result of hit on line below")
+      socket.emit("resultOfHit", { wasHit, shipsLeft: (ships.length - sunkShips.length) });
       if (wasHit) {
-        nyFleet[0][co1 - 1][co2 - 1].hitShip = true
+        nyFleet.current[0][co1 - 1][co2 - 1].hitShip = true
       }
       if (!wasHit) {
-        nyFleet[0][co2 - 1][co1 - 1].hit = "splash"
-        console.log("POSITION!!!!!!!!!!!", nyFleet[0][co1 - 1][co2 - 1])
+        nyFleet.current[0][co2 - 1][co1 - 1].hit = "splash"
+        console.log("POSITION!!!!!!!!!!!", nyFleet.current[0][co1 - 1][co2 - 1])
       }
       setShips(newShips)
 
@@ -101,7 +106,7 @@ const Gameboard = (props) => {
     return () => {
       socket.off("coordinatesFromServer")
     }
-  }, [])
+  }, [props, ships, socket])
 
   if (fleet === null) {
     return <p>Loading...</p>;
@@ -130,9 +135,8 @@ const Gameboard = (props) => {
                 key={index}
               >
                 <button
-                  className={`${shipObject.ship !== null ? "active" : ""} ${
-                    shipObject.hit === "splash" ? "water" : ""
-                  } ${shipObject.hit === true ? "hit" : ""}`}
+                  className={`${shipObject.ship !== null ? "active" : ""} ${shipObject.hit === "splash" ? "water" : ""
+                    } ${shipObject.hit === true ? "hit" : ""}`}
                   value={shipObject}
                   onClick={(e) =>
                     console.log(

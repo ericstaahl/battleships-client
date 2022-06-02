@@ -46,7 +46,7 @@ const Gameboard = (props) => {
       console.log("OpponentGameboard is unmounting")
       socket.off("resultOfHit")
     }
-  }, [])
+  }, [fleet, socket])
 
 
   // //Testing if it disables the one that got hit even though the rest are disabled
